@@ -15,7 +15,7 @@ The app is fully dockerized and can be started with a predefined docker compose 
 3. Execute the command **docker-compose up**
     - Alternatively on windows you can just start the *startEnv.bat* file
 
-After the console outputs "Server is running on port 80..." the APP is successfully running and listening on port *:80
+After the console outputs "You can now view fwe-h2-joke-app in the browser." the APP is successfully running and listening on port *:3000
 
 ## License
 
