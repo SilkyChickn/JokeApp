@@ -1,0 +1,15 @@
+{
+  "name": "fwe-h2-joke-app",
+  "version": "1.0.0",
+  "description": "Second homework for advanced web development. A frontend for the joke api.",
+  "main": "index.ts",
+  "scripts": {
+    "start": "echo test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://code.fbi.h-da.de/istdading/fwe-ws19-20-756891-ha2.git"
+  },
+  "author": "Darius Dinger",
+  "license": "MIT"
+}

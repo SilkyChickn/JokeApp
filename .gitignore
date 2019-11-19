@@ -1,0 +1,19 @@
+## Backend ##
+
+#Compiled code
+api/dist/
+
+#Node modules
+api/node_modules
+
+#Jokes CSV file
+api/jokes.csv
+
+
+## Frontend ##
+
+#Compiled code
+app/dist/
+
+#Node modules
+app/node_modules

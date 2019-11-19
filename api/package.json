@@ -1,0 +1,34 @@
+{
+  "name": "fwe-h1-joke-api",
+  "version": "1.0.0",
+  "description": "First homework for advanced web development. An simple joke api.",
+  "main": "index.ts",
+  "scripts": {
+    "start": "npm run watch && nodemon --legacy-watch ./dist/index.js",
+    "build": "tsc",
+    "watch": "tsc --sourceMap -w &"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://code.fbi.h-da.de/istdading/fwe-ws19-20-756891-ha1.git"
+  },
+  "author": "Darius Dinger",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/body-parser": "^1.17.1",
+    "@types/express": "^4.17.2",
+    "@types/node": "^12.12.6",
+    "nodemon": "^1.19.4",
+    "ts-node": "^8.4.1",
+    "typescript": "^3.6.4"
+  },
+  "dependencies": {
+    "axios": "^0.19.0",
+    "body-parser": "^1.19.0",
+    "class-validator": "^0.11.0",
+    "express": "^4.17.1",
+    "mysql2": "^2.0.0",
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "^0.2.20"
+  }
+}

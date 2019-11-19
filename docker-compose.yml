@@ -1,0 +1,36 @@
+version: '3'
+services:
+  fwe-h1-api:
+    image: node:12
+    container_name: fwe-h1-api
+    volumes:
+      - ./api:/api/
+    working_dir: /api
+    environment:
+    - API_PORT=8080
+    - DBDATABASE=fwe-db
+    - DBHOST=fwe-h1-db
+    - DBPASSWORD=123456789
+    - DBPORT=3306
+    - DBUSER=fwe-user
+    - NODE_ENV=local
+    command: bash ./run.sh
+    ports:
+      - '8080:8080'
+    depends_on:
+      - fwe-h1-db
+
+  fwe-h1-db:
+    image: mysql:5.7
+    container_name: fwe-h1-db
+    command:
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --skip-character-set-client-handshake
+    environment:
+      - MYSQL_ROOT_PASSWORD=123456789
+      - MYSQL_DATABASE=fwe-db
+      - MYSQL_USER=fwe-user
+      - MYSQL_PASSWORD=123456789
+    ports:
+      - '3306:3306'
