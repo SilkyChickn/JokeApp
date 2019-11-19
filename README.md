@@ -1,4 +1,4 @@
-# Joke Api
+# Joke App
 [![version][version-img]](.)
 [![docker][docker-img]][docker-url]
 [![typescript][typescript-img]][typescript-url]
