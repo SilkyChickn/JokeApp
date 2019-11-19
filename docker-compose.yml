@@ -35,17 +35,18 @@ services:
     ports:
       - '3306:3306'
 
-  fwe-h1-app:
-    image: node:12
-    container_name: fwe-h1-app
-    volumes:
-      - ./app:/app/
-    working_dir: /app
-    environment:
-      - API_ADDRESS=fwe-h1-api
-      - API_PORT=8080
-    command: bash ./run.sh
-    ports:
-      - '3000:3000'
-    depends_on:
-      - fwe-h1-api
+# TODO Comment in for delivery!
+#  fwe-h1-app:
+#    image: node:12
+#    container_name: fwe-h1-app
+#    volumes:
+#      - ./app:/app/
+#    working_dir: /app
+#    environment:
+#      - API_ADDRESS=fwe-h1-api
+#      - API_PORT=8080
+#    command: bash ./run.sh
+#    ports:
+#      - '3000:3000'
+#    depends_on:
+#      - fwe-h1-api
