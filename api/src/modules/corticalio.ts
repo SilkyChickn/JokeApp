@@ -44,7 +44,7 @@ export class CortialIO {
         }
 
         const response = await Axios.request(requestOptions);
-
+        
         return response.data;
     }
 }

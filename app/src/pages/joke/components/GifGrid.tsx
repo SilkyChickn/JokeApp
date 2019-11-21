@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import styled, { keyframes } from "styled-components";
 import { ThemeContext } from "../../../contexts/ThemeContext";
 
@@ -14,17 +14,13 @@ const unfoldAnimation = keyframes`
 const GifExpand = styled.details`
     background-color: ${props => props.theme.accent1};
     color: ${props => props.theme.titleFont};
-
+    
     font-size: 1rem;
     cursor: pointer;
 
     overflow: hidden;
     position: relative;
     z-index: 1; 
-
-    :hover {
-        background-color: ${props => props.theme.accent1Hover};
-    }
 
     &[open] {
         div {
@@ -38,6 +34,10 @@ const GifExpand = styled.details`
         padding: 2rem;
         position: relative;
         z-index: 2; 
+
+        :hover {
+            background-color: ${props => props.theme.accent1Hover};
+        }
     }
 
     @media all and (min-width: 800px) {
@@ -61,17 +61,35 @@ const Gif = styled.img`
 `;
 
 export type GifGridProps = {
-    gifs: string[]
+    jokeId: string
 }
 
 export const GifGrid: React.FC<GifGridProps> = (args) => {
     const { theme } = useContext(ThemeContext);
+    const [gifs, setGifs] = useState<string[]>([]);
+
+    useEffect(() => {
+        try {
+            fetch("/api/v1/joke/" + args.jokeId + "/gif", {
+                method: "GET"
+            }).then(x => x.json()).then(x => {
+                try {
+                    const gifs = x.data.map((data: {keyword: string, gif: string}) => data.gif);
+                    setGifs(gifs);
+                } catch (e) {
+                    console.error("Error processing response from api: " + e);
+                }
+            })
+        } catch (e) {
+            console.error(e);
+        }
+    }, [args.jokeId]);
     
     return (
         <GifExpand theme={theme}>
             <summary>Related Gifs</summary>
             <GifWrapper>{
-            args.gifs.map(gif => {
+            gifs.map(gif => {
                 return <Gif src={gif} />
             })
             }</GifWrapper>

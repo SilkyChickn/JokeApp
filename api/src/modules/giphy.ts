@@ -24,7 +24,7 @@ export class Giphy {
         }
         
         const response = await Axios.request(requestOptions);
-
-        return response.data.data.embed_url;
+        
+        return "https://media.giphy.com/media/" + response.data.data.id + "/giphy.gif";
     }
 }

@@ -3,11 +3,12 @@ import styled from "styled-components";
 import { CategoryList, CategoryItem } from "./CategoryItem";
 import { FunninessController } from "./FunninessController";
 import { Category } from "../types/Category";
+import { Joke } from "../types/Joke";
 
 const CategoryFunninessWrapper = styled.div`
     display: flex;
     align-items: baseline;
-    padding: 2rem;
+    padding: 0;
     
     @media all and (min-width: 800px) {
         div {
@@ -17,19 +18,18 @@ const CategoryFunninessWrapper = styled.div`
 `;
 
 export type CategoryFunninessProps = {
-    categories: Category[],
-    funniness: number
+    joke: Joke
 }
 
 export const CategoryFunniness: React.FC<CategoryFunninessProps> = (args) => {
     return (
         <CategoryFunninessWrapper>
             <CategoryList>{
-                args.categories.map(cat => {
+                args.joke.categories.map(cat => {
                     return <CategoryItem category={cat} />
                 })
             }</CategoryList>
-            <FunninessController funniness={args.funniness} />
+            <FunninessController joke={args.joke} />
         </CategoryFunninessWrapper>
     );
 }

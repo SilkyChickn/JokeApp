@@ -23,7 +23,7 @@ const ListItem = styled.li`
     overflow: hidden;
 
     cursor: pointer;
-
+    
     @media all and (min-width: 800px) {
         margin-left: 15%;
         margin-right: 15%;
@@ -76,8 +76,8 @@ export const JokeItem: React.FC<JokeItemProps> = (args) => {
     return (
         <ListItem theme={theme}>
             <Header>{args.joke.title}</Header>
-            <Text onClick={(e) => alert("Hello World!")}>{args.joke.text}</Text>
-            <CategoryFunniness funniness={args.joke.funniness} categories={args.joke.categories} />
+            <Text onClick={(e) => window.location.href = "/joke/" + args.joke.id}>{args.joke.text}</Text>
+            <CategoryFunniness joke={args.joke} />
             <AuthorSignature author={args.joke.author} />
         </ListItem>
     );

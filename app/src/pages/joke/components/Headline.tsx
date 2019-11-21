@@ -27,6 +27,7 @@ const BackButton = styled.a`
     color: ${props => props.theme.buttonFont};
 
     cursor: pointer;
+    text-decoration: none;
 
     margin-right: 2rem;
     margin-left: 1rem;
@@ -46,11 +47,11 @@ export type HeadlineProps = {
 }
 
 export const Headline: React.FC<HeadlineProps> = (args) => {
-const { theme } = useContext(ThemeContext);
+    const { theme } = useContext(ThemeContext);
 
     return (
         <HeadLine theme={theme}>
-            <BackButton theme={theme}>&#171;</BackButton>
+            <BackButton href={"/"} theme={theme}>&#171;</BackButton>
             <Title>{args.title}</Title>
         </HeadLine>
     );

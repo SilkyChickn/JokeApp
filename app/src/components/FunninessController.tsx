@@ -1,6 +1,8 @@
 import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import { ThemeContext } from "../contexts/ThemeContext";
+import { Joke } from "../types/Joke";
+import { JokeItem } from "../pages/dashboard/components/JokeItem";
 
 const ControllerWrapper = styled.div`
     color: ${props => props.theme.funninessFont};
@@ -32,7 +34,7 @@ const DislikeButton = styled.a<ButtonProps>`
 `;
 
 export type FunninessControllerProps = {
-    funniness: number
+    joke: Joke
 }
 
 export const FunninessController: React.FC<FunninessControllerProps> = (args) => {
@@ -41,17 +43,41 @@ export const FunninessController: React.FC<FunninessControllerProps> = (args) =>
     const [liked, setLiked] = useState(false);
     const [disliked, setDisliked] = useState(false);
     
+    const like = () => {
+        if(liked) return;
+        setLiked(true);
+        setDisliked(false);
+        args.joke.funniness++;
+        updateJoke();
+    }
+
+    const dislike = () => {
+        if(disliked) return;
+        setLiked(false);
+        setDisliked(true);
+        args.joke.funniness--;
+        updateJoke();
+    }
+    
+    const updateJoke = () => {
+        try {
+            fetch("/api/v1/joke/" + args.joke.id, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(args.joke)
+            });
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
     return (
         <ControllerWrapper theme={theme}>
-            <LikeButton clicked={liked} theme={theme} onClick={() => {
-                setLiked(true);
-                setDisliked(false);
-            }}>&#9650;</LikeButton>
-            {args.funniness}
-            <DislikeButton clicked={disliked} theme={theme} onClick={() => {
-                setLiked(false);
-                setDisliked(true);
-            }}>&#9660;</DislikeButton>
+            <LikeButton clicked={liked} theme={theme} onClick={like}>&#9650;</LikeButton>
+            {args.joke.funniness}
+            <DislikeButton clicked={disliked} theme={theme} onClick={dislike}>&#9660;</DislikeButton>
         </ControllerWrapper>
     );
 }
