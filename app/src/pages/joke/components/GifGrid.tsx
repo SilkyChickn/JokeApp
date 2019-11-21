@@ -54,6 +54,7 @@ const GifWrapper = styled.div`
 const Gif = styled.img`
     display: inline-block;
     width: 50%;
+    border: 1px solid black;
 
     @media all and (min-width: 800px) {
         width: 25%;

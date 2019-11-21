@@ -73,7 +73,11 @@ export const JokePage: React.FC<JokePageProps> = (args) => {
             <Headline title={joke.title} />
             <Text>{joke.text}</Text>
             <CategoryFunniness joke={joke} />
-            <Timestamp theme={theme}>Created: {joke.createdAt}<br />Updated: {joke.updatedAt}</Timestamp>
+            <Timestamp theme={theme}>
+                Created: {joke.createdAt.substring(0, 10)}
+                <br />
+                Updated: {joke.updatedAt.substring(0, 10)}
+            </Timestamp>
             <AuthorSignature author={joke.author} />
             <GifGrid jokeId={joke.id} />
         </div>
