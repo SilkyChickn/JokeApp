@@ -9,7 +9,7 @@ const CategoryFunninessWrapper = styled.div`
     align-items: baseline;
     padding: 2rem;
     
-    @media all and (min-width: 700px) {
+    @media all and (min-width: 800px) {
         div {
             font-size: 2.5rem;
         }

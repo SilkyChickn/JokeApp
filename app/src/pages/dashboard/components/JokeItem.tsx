@@ -24,7 +24,7 @@ const ListItem = styled.li`
 
     cursor: pointer;
 
-    @media all and (min-width: 700px) {
+    @media all and (min-width: 800px) {
         margin-left: 15%;
         margin-right: 15%;
 
@@ -60,6 +60,10 @@ const Text = styled.p`
     white-space: pre-wrap;
 
     margin: 1.5rem;
+
+    @media all and (min-width: 800px) {
+        font-size: 1.5rem;
+    }
 `;
 
 export type JokeItemProps = {

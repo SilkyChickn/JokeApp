@@ -24,6 +24,10 @@ const ListItem = styled.li`
     padding: 0.25rem;
     margin: 0.2rem;
     border-radius: 0.5rem;
+
+    @media all and (min-width: 800px) {
+        font-size: 1.25rem;
+    }
 `;
 
 export type CategoryItemProps = {
