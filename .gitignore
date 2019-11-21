@@ -6,9 +6,6 @@ api/dist/
 #Node modules
 api/node_modules
 
-#Jokes CSV file
-api/jokes.csv
-
 
 ## Frontend ##
 
