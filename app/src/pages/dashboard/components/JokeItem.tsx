@@ -25,14 +25,11 @@ const ListItem = styled.li`
     cursor: pointer;
     
     @media all and (min-width: 800px) {
-        margin-left: 15%;
-        margin-right: 15%;
-
         :last-child {
             border-bottom-left-radius: 2rem;
             border-bottom-right-radius: 2rem;
         }
-
+        
         :first-child {
             border-top-left-radius: 2rem;
             border-top-right-radius: 2rem;
@@ -53,6 +50,10 @@ const Header = styled.p`
 
     margin: 0;
     margin-top: 1.5rem;
+
+    @media all and (min-width: 800px) {
+        font-size: 2.5rem;
+    }
 `;
 
 const Text = styled.p`
@@ -73,10 +74,14 @@ export type JokeItemProps = {
 export const JokeItem: React.FC<JokeItemProps> = (args) => {
     const { theme } = useContext(ThemeContext);
     
+    const goToJoke = () => {
+        window.location.href = "/joke/" + args.joke.id;
+    }
+
     return (
         <ListItem theme={theme}>
-            <Header>{args.joke.title}</Header>
-            <Text onClick={(e) => window.location.href = "/joke/" + args.joke.id}>{args.joke.text}</Text>
+            <Header onClick={goToJoke}>{args.joke.title}</Header>
+            <Text onClick={goToJoke}>{args.joke.text}</Text>
             <CategoryFunniness joke={args.joke} />
             <AuthorSignature author={args.joke.author} />
         </ListItem>

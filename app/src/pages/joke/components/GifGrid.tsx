@@ -38,6 +38,9 @@ const GifExpand = styled.details`
         :hover {
             background-color: ${props => props.theme.accent1Hover};
         }
+        :focus {
+            outline: none;
+        }
     }
 
     @media all and (min-width: 800px) {
@@ -80,7 +83,7 @@ export const GifGrid: React.FC<GifGridProps> = (args) => {
                 } catch (e) {
                     console.error("Error processing response from api: " + e);
                 }
-            })
+            });
         } catch (e) {
             console.error(e);
         }

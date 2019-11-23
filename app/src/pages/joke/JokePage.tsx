@@ -6,6 +6,9 @@ import { CategoryFunniness } from "../../components/CategoryFunniness";
 import { AuthorSignature } from "../../components/AuthorSignature";
 import { GifGrid } from "./components/GifGrid";
 import { Headline } from "./components/Headline";
+import { useFetch } from "../../hooks/UseFetch";
+import { ErrorContainer } from "../../components/ErrorContainer";
+import { LoadingContainer } from "../../components/LoadingContainer";
 
 export const Text = styled.p`
     color: ${props => props.theme.textFont};
@@ -31,55 +34,29 @@ export const Timestamp = styled.p`
     margin-left: 1.7rem;
 `;
 
-const emptyJoke: Joke = {
-    id: "",
-    title: "",
-    text: "",
-    funniness: 0,
-    author: {},
-    categories: [],
-    createdAt: "",
-    updatedAt: ""
-}
-
 export type JokePageProps = {
     routerProps: any
 }
 
 export const JokePage: React.FC<JokePageProps> = (args) => {
     const { theme } = useContext(ThemeContext);
-    const [joke, setJoke] = useState<Joke>(emptyJoke);
+    const { data, loading, error } = useFetch<Joke>("/api/v1/joke/" + args.routerProps.match.params.id);
 
-    useEffect(() => {
-        try {
-            fetch("/api/v1/joke/" + args.routerProps.match.params.id, {
-                method: "GET"
-            }).then(x => x.json()).then(x => {
-                try {
-                    const joke = x.data as Joke;
-                    if(joke === undefined) throw "Joke not found!";
-                    setJoke(joke);
-                } catch (e) {
-                    console.error("Error processing response from api: " + e);
-                }
-            })
-        } catch (e) {
-            console.error(e);
-        }
-    }, [args]);
+    if(error) return <ErrorContainer error={error} />
+    if(data === null || loading) return <LoadingContainer />
     
     return (
         <div>
-            <Headline title={joke.title} />
-            <Text>{joke.text}</Text>
-            <CategoryFunniness joke={joke} />
+            <Headline title={data.title} />
+            <Text>{data.text}</Text>
+            <CategoryFunniness joke={data} />
             <Timestamp theme={theme}>
-                Created: {joke.createdAt.substring(0, 10)}
+                Created: {data.createdAt.substring(0, 10)}
                 <br />
-                Updated: {joke.updatedAt.substring(0, 10)}
+                Updated: {data.updatedAt.substring(0, 10)}
             </Timestamp>
-            <AuthorSignature author={joke.author} />
-            <GifGrid jokeId={joke.id} />
+            <AuthorSignature author={data.author} />
+            <GifGrid jokeId={data.id} />
         </div>
     );
 }

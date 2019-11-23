@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { DashboardPage } from './pages/dashboard/DashboardPage';
 import { JokePage } from './pages/joke/JokePage';
 import { Joke } from './types/Joke';
+import { PostJokePage } from './pages/createJoke/PostJokePage';
 
 const testJoke: Joke = {
     id: "6e532b21-cd8c-4028-b425-1690c873b56e",
@@ -32,7 +33,7 @@ const App: React.FC = () => {
                         return <JokePage routerProps={props} />
                     }}</Route>
                     <Route path="/create">
-                        
+                        <PostJokePage />
                     </Route>
                     <Route path="/">
                         <DashboardPage />

@@ -1,28 +1,46 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { JokeList, JokeItem } from "./components/JokeItem";
 import { Joke } from "../../types/Joke";
+import { useFetch } from "../../hooks/UseFetch";
+import { ErrorContainer } from "../../components/ErrorContainer";
+import { LoadingContainer } from "../../components/LoadingContainer";
+import { Button } from "../createJoke/PostJokePage";
+import { ThemeContext } from "../../contexts/ThemeContext";
+import styled from "styled-components";
+
+export const DashboardWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    @media all and (min-width: 800px) {
+        align-items: flex-start;
+
+        margin-left: 15%;
+        margin-right: 15%;
+        margin-bottom: 3rem;
+    }
+`;
 
 export const DashboardPage: React.FC = () => {
-    const [jokes, setJokes] = useState<Joke[]>([]);
-
-    useEffect(() => {
-        try {
-            fetch("/api/v1/joke", {
-                method: "GET"
-            }).then(x => x.json()).then(x => {
-                const jokes = x.data as Joke[];
-                setJokes(jokes);
-            })
-        } catch (e) {
-            console.error(e);
-        }
-    }, []);
+    const {data, error, loading} = useFetch<Joke[]>("/api/v1/joke");
+    const { theme } = useContext(ThemeContext);
+    
+    if(error) return <ErrorContainer error={error} />
+    if(data === null || loading) return <LoadingContainer />
     
     return (
-        <JokeList>{
-            jokes.map(joke => {
-                return <JokeItem joke={joke} />
-            })
-        }</JokeList>
+        <DashboardWrapper>
+            <Button 
+                onClick={() => window.location.href="/create"} 
+                style={{margin: "2rem"}} theme={theme}>
+                Post new Joke
+            </Button>
+            <JokeList>{
+                data.map(joke => {
+                    return <JokeItem joke={joke} />
+                })
+            }</JokeList>
+        </DashboardWrapper>
     );
 }

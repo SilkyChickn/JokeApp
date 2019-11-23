@@ -45,17 +45,19 @@ export const FunninessController: React.FC<FunninessControllerProps> = (args) =>
     
     const like = () => {
         if(liked) return;
+        if(disliked) args.joke.funniness += 2;
+        else args.joke.funniness++;
         setLiked(true);
         setDisliked(false);
-        args.joke.funniness++;
         updateJoke();
     }
 
     const dislike = () => {
         if(disliked) return;
+        if(liked) args.joke.funniness -= 2;
+        else args.joke.funniness--;
         setLiked(false);
         setDisliked(true);
-        args.joke.funniness--;
         updateJoke();
     }
     
@@ -72,7 +74,7 @@ export const FunninessController: React.FC<FunninessControllerProps> = (args) =>
             console.error(e);
         }
     }
-
+    
     return (
         <ControllerWrapper theme={theme}>
             <LikeButton clicked={liked} theme={theme} onClick={like}>&#9650;</LikeButton>
