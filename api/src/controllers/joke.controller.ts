@@ -3,8 +3,6 @@ import { Repository, getRepository, MoreThanOrEqual } from "typeorm";
 import { Joke } from "../entities/joke";
 import { Author } from "../entities/author";
 import { validate } from "class-validator";
-import { promises as fs } from "fs";
-import { Category } from "../entities/category";
 import { CsvExport } from "../modules/csvexport";
 import { CortialIO } from "../modules/corticalio";
 import { Giphy } from "../modules/giphy";
@@ -102,15 +100,19 @@ export class JokeController {
             const keywords: string[] = await CortialIO.getKeywords(joke.text);
 
             //Getting gifs for keywords
-            const pResult = keywords.map(async (e: string) => {
-                return {
-                    keyword: e,
-                    gif: await Giphy.getGifUrl(e)
-                }
-            });
-            const result = await Promise.all(pResult);
-
-            res.send({ status: "ok", data: result });
+            try {
+                const pResult = keywords.map(async (e: string) => {
+                    return {
+                        keyword: e,
+                        gif: await Giphy.getGifUrl(e)
+                    }
+                });
+                const result = await Promise.all(pResult);
+    
+                res.send({ status: "ok", data: result });
+            } catch(e) {
+                res.status(500).send({ status: "external api error" });
+            }
         } catch (error) {
             res.status(404).send({ status: "jokes not found" });
         }
@@ -149,7 +151,7 @@ export class JokeController {
             //Validate joke
             const errors = await validate(joke);
             if(errors.length > 0){
-                res.status(400).send({ status: "bad request", errors: errors });
+                res.status(400).send({ status: "bad request", errors: errors[0].constraints });
                 return;
             }
 
@@ -198,7 +200,7 @@ export class JokeController {
             //Validate joke
             const errors = await validate(joke);
             if(errors.length > 0){
-                res.status(400).send({ status: "bad request", errors: errors });
+                res.status(400).send({ status: "bad request", errors: errors[0].constraints });
                 return;
             }
 

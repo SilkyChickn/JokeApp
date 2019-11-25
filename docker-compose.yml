@@ -1,15 +1,15 @@
 version: '3'
 services:
-  fwe-h1-api:
+  fwe-h2-api:
     image: node:12
-    container_name: fwe-h1-api
+    container_name: fwe-h2-api
     volumes:
       - ./api:/api/
     working_dir: /api
     environment:
     - API_PORT=8080
     - DBDATABASE=fwe-db
-    - DBHOST=fwe-h1-db
+    - DBHOST=fwe-h2-db
     - DBPASSWORD=123456789
     - DBPORT=3306
     - DBUSER=fwe-user
@@ -18,11 +18,11 @@ services:
     ports:
       - '8080:8080'
     depends_on:
-      - fwe-h1-db
+      - fwe-h2-db
 
-  fwe-h1-db:
+  fwe-h2-db:
     image: mysql:5.7
-    container_name: fwe-h1-db
+    container_name: fwe-h2-db
     command:
       - --character-set-server=utf8mb4
       - --collation-server=utf8mb4_unicode_ci
@@ -35,10 +35,10 @@ services:
     ports:
       - '3306:3306'
 
-# TODO Comment in for delivery!
-#  fwe-h1-app:
+# TODO Comment in for delivery, also change prox in package json!!!
+#  fwe-h2-app:
 #    image: node:12
-#    container_name: fwe-h1-app
+#    container_name: fwe-h2-app
 #    volumes:
 #      - ./app:/app/
 #    working_dir: /app
@@ -46,4 +46,4 @@ services:
 #    ports:
 #      - '3000:3000'
 #    depends_on:
-#      - fwe-h1-api
+#      - fwe-h2-api

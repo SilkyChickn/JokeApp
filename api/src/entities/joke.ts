@@ -23,6 +23,7 @@ export class Joke {
     text: string;
     
     @Column({ default: 'visible' })
+    @IsIn(["visible", "hidden"], { message: "The visibility has to be visible or hidden" })
     visibility: 'visible' | 'hidden';
 
     @Column()

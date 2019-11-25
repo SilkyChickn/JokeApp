@@ -53,7 +53,7 @@ export class CategoryController {
         //Validate category
         const errors = await validate(category);
         if(errors.length > 0){
-            res.status(400).send({ status: "bad request", errors: errors });
+            res.status(400).send({ status: "bad request", errors: errors[0].constraints });
             return;
         }
 
@@ -84,7 +84,7 @@ export class CategoryController {
             //Validate category
             const errors = await validate(category);
             if(errors.length > 0){
-                res.status(400).send({ status: "bad request", errors: errors });
+                res.status(400).send({ status: "bad request", errors: errors[0].constraints });
                 return;
             }
 
