@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import { CategoryList, CategoryItem } from "./CategoryItem";
 import { FunninessController } from "./FunninessController";
-import { Category } from "../types/Category";
 import { Joke } from "../types/Joke";
 
 const CategoryFunninessWrapper = styled.div`

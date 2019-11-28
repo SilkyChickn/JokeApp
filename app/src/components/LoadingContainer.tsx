@@ -1,6 +1,5 @@
 import React from "react";
 import styled from "styled-components";
-import { Error } from "../types/Error";
 
 const LoadingText = styled.p`
     text-align: center;

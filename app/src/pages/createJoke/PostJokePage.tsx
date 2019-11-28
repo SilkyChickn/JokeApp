@@ -1,7 +1,10 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import styled from "styled-components";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import { SelectAuthor } from "./components/SelectAuthor";
+import { JokeCreateData } from "../../types/Joke";
+import { Error } from "../../types/Error";
+import { ErrorBanner } from "./components/ErrorBanner";
 
 const Form = styled.form`
     display: flex;
@@ -65,10 +68,9 @@ export const Button = styled.button`
 
     border: 0;
     border-radius: .5rem;
-    margin-left: .5rem;
     padding: .5rem;
     max-width: 10rem;
-
+    
     :focus {
         outline: 0;
     }
@@ -88,29 +90,70 @@ export const Seperator = styled.div`
 export const PostJokePage: React.FC = () => {
     const { theme } = useContext(ThemeContext);
 
+    const [title, setTitle] = useState<string>("");
+    const [text, setText] = useState<string>("");
+    const [visible, setVisible] = useState<boolean>(true);
+
+    const [error, setError] = useState<Error | null>(null);
+
     const cancel = () => {
         window.location.href = "/";
     }
 
     const post = () => {
-        alert("Not implemented yet :/");
+        
+        const createData: JokeCreateData = {
+            title: title,
+            text: text,
+            visibility: visible ? "visible" : "hidden",
+            authorId: "e6eb2ccd-24dd-48b8-8bb7-8c17de4ae756"
+        }
+
+        fetch("/api/v1/joke/", {
+            method: "POST",headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(createData)
+        }).then(async res => {
+            if(res.status === 500){
+                setError({code: res.status, text: res.statusText});
+                throw res.status + ":" + res.statusText;
+            }else if(!res.ok){
+                const data = await res.json();
+                if(data.error !== undefined) setError({ code: res.status, text: data.error });
+                else setError({ code: res.status, text: data.status });
+                throw res.status + ":" + data.status;
+            }
+            return res.json();
+        }).then(() => {
+            closeError();
+            cancel();
+        });
+    }
+
+    const closeError = () => {
+        setError(null);
     }
 
     return (
-        <Form onSubmit={post} theme={theme}>
-            <Input theme={theme} placeholder={"Title"} />
-            <TextArea theme={theme} placeholder={"Joke..."} />
-            <Seperator theme={theme} />
-            <SelectAuthor />
-            <Seperator theme={theme} />
-            <div style={{display: "flex", justifyContent: "flex-end", alignItems: "baseline"}}>
-                <label style={{marginRight: "2rem"}}>
-                    <Input theme={theme} type={"checkbox"} />
-                    <span>{"Visible on dashboard"}</span>
-                </label>
-                <Button type="button" onClick={cancel} theme={theme}>Cancel</Button>
-                <Button type="submit" theme={theme}>Post Joke</Button>
-            </div>
-        </Form>
+        <>
+            <ErrorBanner error={error} closeError={closeError} />
+            <Form theme={theme}>
+                <Input value={title} onChange={event => setTitle(event.target.value)} theme={theme} placeholder={"Title"} />
+                <TextArea value={text} onChange={event => setText(event.target.value)} theme={theme} placeholder={"Joke..."} />
+                <Seperator theme={theme} />
+                <SelectAuthor />
+                <Seperator theme={theme} />
+                <div style={{display: "flex", justifyContent: "flex-end", alignItems: "baseline"}}>
+                    <label style={{marginRight: "2rem"}}>
+                        <Input checked={visible} onChange={event => setVisible(event.target.checked)} theme={theme} type={"checkbox"} />
+                        <span>{"Visible on dashboard"}</span>
+                    </label>
+                    <Button type="button" onClick={cancel} theme={theme}>Cancel</Button>
+                    <div style={{width:"1rem"}} />
+                    <Button type="button" onClick={post} theme={theme}>Post Joke</Button>
+                </div>
+            </Form>
+        </>
     );
 }

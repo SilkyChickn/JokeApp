@@ -9,7 +9,8 @@ export const JokeList = styled.ul`
     display: flex;
     list-style: none;
     flex-direction: column;
-
+    width: 100%;
+    
     padding: 0;
     margin: 0;
 `;

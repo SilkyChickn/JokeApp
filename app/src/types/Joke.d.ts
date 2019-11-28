@@ -9,3 +9,10 @@ export type Joke = {
     createdAt: string,
     updatedAt: string
 }
+
+export type JokeCreateData = {
+	title: string
+    text: string,
+    authorId: string,
+    visibility: "visible" | "hidden"
+}

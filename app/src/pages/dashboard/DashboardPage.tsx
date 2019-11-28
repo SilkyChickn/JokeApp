@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useContext } from "react";
 import { JokeList, JokeItem } from "./components/JokeItem";
 import { Joke } from "../../types/Joke";
 import { useFetch } from "../../hooks/UseFetch";
@@ -22,6 +22,7 @@ export const DashboardWrapper = styled.div`
     }
 `;
 
+//TODO Delete button for jokes
 export const DashboardPage: React.FC = () => {
     const {data, error, loading} = useFetch<Joke[]>("/api/v1/joke");
     const { theme } = useContext(ThemeContext);

@@ -3,12 +3,12 @@ import { Theme } from "../types/Theme";
 import { Dark } from "../themes/Dark.theme";
 
 export type ThemeContextProps = {
-    theme: Theme | null,
+    theme: Theme,
     setTheme: (theme: Theme) => void
 }
 
 export const ThemeContext = React.createContext<ThemeContextProps>({
-    theme: null,
+    theme: Dark,
     setTheme: (theme: Theme) => {}
 });
 

@@ -2,7 +2,6 @@ import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import { ThemeContext } from "../contexts/ThemeContext";
 import { Joke } from "../types/Joke";
-import { JokeItem } from "../pages/dashboard/components/JokeItem";
 
 const ControllerWrapper = styled.div`
     color: ${props => props.theme.funninessFont};

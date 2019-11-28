@@ -17,7 +17,7 @@ export function useFetch<T>(url : string){
         }).then(res => {
             if(!res.ok){
                 setError({code: res.status, text: res.statusText});
-                throw res.status + ": " + res.statusText;
+                throw res.status + ":" + res.statusText;
             }
             return res.json();
         }).then(json => {
@@ -32,7 +32,7 @@ export function useFetch<T>(url : string){
     useEffect(() => {
         setLoading(true);
         fetchData();
-    }, []);
+    }, [url]);
 
     return {data, loading, error};
 }

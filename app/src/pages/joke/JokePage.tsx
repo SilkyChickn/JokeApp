@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import { Joke } from "../../types/Joke";
 import { ThemeContext } from "../../contexts/ThemeContext";
@@ -38,6 +38,7 @@ export type JokePageProps = {
     routerProps: any
 }
 
+//TODO Delete button
 export const JokePage: React.FC<JokePageProps> = (args) => {
     const { theme } = useContext(ThemeContext);
     const { data, loading, error } = useFetch<Joke>("/api/v1/joke/" + args.routerProps.match.params.id);

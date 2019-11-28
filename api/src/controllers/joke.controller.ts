@@ -130,13 +130,7 @@ export class JokeController {
         const { title, text, visibility, authorId } = req.body;
 
         try {
-            //Check if joke is in english
-            const jokeLanguage = await CortialIO.getLanguage(text);
-            if(jokeLanguage !== "en"){
-                res.status(400).send({ status: "bad request", errors: "joke has to be in english"});
-                return;
-            }
-
+            
             //Get author from id
             const authorRepo: Repository<Author> = getRepository(Author);
             const author: Author = await authorRepo.findOneOrFail(authorId);
@@ -151,8 +145,22 @@ export class JokeController {
             //Validate joke
             const errors = await validate(joke);
             if(errors.length > 0){
-                res.status(400).send({ status: "bad request", errors: errors[0].constraints });
+                res.status(400).send({ 
+                    status: "bad request", 
+                    error: errors[0].constraints[Object.keys(errors[0].constraints)[0]] 
+                });
                 return;
+            }
+
+            //Check if joke is in english
+            try {
+                const jokeLanguage = await CortialIO.getLanguage(text);
+                if(jokeLanguage !== "en"){
+                    res.status(400).send({ status: "bad request", error: "joke has to be in english, maybe its too short to identify"});
+                    return;
+                }
+            } catch(e) {
+                res.status(500).send({ status: "external api error" })
             }
 
             const jokeRepo: Repository<Joke> = getRepository(Joke);
