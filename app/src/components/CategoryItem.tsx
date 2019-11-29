@@ -20,7 +20,7 @@ const ListItem = styled.li`
     background-color: ${props => props.theme.categoryBackground};
     
     font-size: 0.75rem;
-
+    
     padding: 0.25rem;
     margin: 0.2rem;
     border-radius: 0.5rem;

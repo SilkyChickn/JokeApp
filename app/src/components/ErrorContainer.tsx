@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import { Error } from "../types/Error";
+import { ThemeContext } from "../contexts/ThemeContext";
+import { Background } from "./Background";
 
 const ErrorWrapper = styled.div`
     display: flex;
     flex-direction: column;
     text-align: center;
+    color: ${props => props.theme.textFont};
 `;
 
 const ErrorTitle = styled.p`
@@ -39,11 +42,16 @@ export type ErrorComponentProps = {
 }
 
 export const ErrorContainer: React.FC<ErrorComponentProps> = (args) => {
+    const { theme } = useContext(ThemeContext);
+    
     return (
-        <ErrorWrapper>
+        <>
+        <Background />
+        <ErrorWrapper theme={theme}>
             <ErrorTitle>Oops!</ErrorTitle>
             <ErrorCode>{args.error.code}</ErrorCode>
             <ErrorText>{args.error.text}</ErrorText>
         </ErrorWrapper>
+        </>
     );
 }

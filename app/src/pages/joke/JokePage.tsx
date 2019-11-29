@@ -9,6 +9,7 @@ import { Headline } from "./components/Headline";
 import { useFetch } from "../../hooks/UseFetch";
 import { ErrorContainer } from "../../components/ErrorContainer";
 import { LoadingContainer } from "../../components/LoadingContainer";
+import { Background } from "../../components/Background";
 
 export const Text = styled.p`
     color: ${props => props.theme.textFont};
@@ -18,7 +19,7 @@ export const Text = styled.p`
     margin: 0;
     padding-bottom: 0;
     font-size: 1rem;
-
+    
     @media all and (min-width: 800px) {
         font-size: 2rem;
         padding: 4rem;
@@ -47,7 +48,8 @@ export const JokePage: React.FC<JokePageProps> = (args) => {
     if(data === null || loading) return <LoadingContainer />
     
     return (
-        <div>
+        <div style={{color: theme.textFont}}>
+            <Background />
             <Headline title={data.title} />
             <Text>{data.text}</Text>
             <CategoryFunniness joke={data} />

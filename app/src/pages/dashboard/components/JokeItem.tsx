@@ -1,9 +1,10 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Joke } from "../../../types/Joke";
 import { ThemeContext } from "../../../contexts/ThemeContext";
 import styled from "styled-components";
 import { CategoryFunniness } from "../../../components/CategoryFunniness";
 import { AuthorSignature } from "../../../components/AuthorSignature";
+import { Redirect } from "react-router";
 
 export const JokeList = styled.ul`
     display: flex;
@@ -74,17 +75,17 @@ export type JokeItemProps = {
 
 export const JokeItem: React.FC<JokeItemProps> = (args) => {
     const { theme } = useContext(ThemeContext);
-    
-    const goToJoke = () => {
-        window.location.href = "/joke/" + args.joke.id;
-    }
+    const [toJoke, setToJoke] = useState<boolean>(false);
 
     return (
-        <ListItem theme={theme}>
-            <Header onClick={goToJoke}>{args.joke.title}</Header>
-            <Text onClick={goToJoke}>{args.joke.text}</Text>
-            <CategoryFunniness joke={args.joke} />
-            <AuthorSignature author={args.joke.author} />
-        </ListItem>
+        <>
+            {toJoke ? <Redirect to={"/joke/" + args.joke.id} /> : null}
+            <ListItem theme={theme}>
+                <Header onClick={() => setToJoke(true)}>{args.joke.title}</Header>
+                <Text onClick={() => setToJoke(true)}>{args.joke.text}</Text>
+                <CategoryFunniness joke={args.joke} />
+                <AuthorSignature author={args.joke.author} />
+            </ListItem>
+        </>
     );
 }

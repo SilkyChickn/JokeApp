@@ -54,7 +54,9 @@ export class AuthorController {
         //Validate author
         const errors = await validate(author);
         if(errors.length > 0){
-            res.status(400).send({ status: "bad request", errors: errors[0].constraints });
+            res.status(400).send({ status: "bad request", 
+            error: errors[0].constraints[Object.keys(errors[0].constraints)[0]]
+        });
             return;
         }
 
@@ -86,7 +88,9 @@ export class AuthorController {
             //Validate author
             const errors = await validate(author);
             if(errors.length > 0){
-                res.status(400).send({ status: "bad request", errors: errors[0].constraints });
+                res.status(400).send({ status: "bad request", 
+                error: errors[0].constraints[Object.keys(errors[0].constraints)[0]]
+            });
                 return;
             }
 

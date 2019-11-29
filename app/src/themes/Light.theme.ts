@@ -1,28 +1,28 @@
 import { Theme } from "../types/Theme";
 
 export const Light: Theme = {
-    background: "rgb(33,33,33)",
+    background: "#eee",
     signatureFont: "#888",
-    textFont: "red",
+    textFont: "black",
     
     buttonFont: "#fff",
     buttonFontHover: "#fff",
 
-    accent1: "red",
-    accent1Hover: "rgb(50, 50, 50)",
-    accent2: "rgb(38, 38, 38)",
-    accent2Hover: "rgb(46, 46, 46)",
-    accent3: "rgb(32, 32, 32)",
+    accent1: "white",
+    accent1Hover: "#f7f7f7",
+    accent2: "#fafafa",
+    accent2Hover: "#dfdfdf",
+    accent3: "#aaa",
     accent3Hover: "rgb(42, 42, 42)",
     
     categoryBackground: "#775",
     categoryFont: "#fff",
 
-    like: "#5a5",
-    likeClicked: "#5c5",
-    likeHover: "#5e5",
-    dislike: "#a55",
-    dislikeClicked: "#c55",
-    dislikeHover: "#e55",
-    funninessFont: "#aaa"
+    like: "#5b5",
+    likeClicked: "#5f5",
+    likeHover: "#5d5",
+    dislike: "#b55",
+    dislikeClicked: "#f55",
+    dislikeHover: "#d55",
+    funninessFont: "#666"
 }

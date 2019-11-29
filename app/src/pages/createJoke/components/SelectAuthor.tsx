@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import { Input, TextArea, Button } from "../PostJokePage";
 import { ThemeContext } from "../../../contexts/ThemeContext";
 import styled from "styled-components";
@@ -12,11 +12,23 @@ const AuthorWrapper = styled.div`
     margin-bottom: 2rem;
 `;
 
-export const SelectAuthor: React.FC = () => {
-    const [createAuthor, setCreateAuthor] = useState<boolean>(false);
-    const { theme } = useContext(ThemeContext);
+const Selector = styled(CreatableSelect)`
+    margin-bottom: 1rem;
+`;
 
-    const [value, setValue] = useState<Author>();
+export type SelectAuthorProps = {
+    selectedAuthor: Author | undefined,
+    setSelectedAuthor: (author: Author) => void,
+    createAuthor: boolean,
+    setCreateAuthor: (createAuthor: boolean) => void,
+    name: string, 
+    setName: (name: string) => void,
+    signature: string,
+    setSignature: (signature: string) => void
+}
+
+export const SelectAuthor: React.FC<SelectAuthorProps> = (args) => {
+    const { theme } = useContext(ThemeContext);
     const { data, loading } = useFetch("/api/v1/author/");
 
     const creatableStyle = (provided: React.CSSProperties) => {
@@ -29,12 +41,12 @@ export const SelectAuthor: React.FC = () => {
         };
     }
     
-    if (createAuthor) {
+    if (args.createAuthor) {
         return (
             <AuthorWrapper>
-                <Input theme={theme} placeholder={"Author Name"} />
-                <TextArea theme={theme} placeholder={"Signature"} />
-                <Button onClick={() => setCreateAuthor(false)} theme={theme}>
+                <Input value={args.name} onChange={event => args.setName(event.target.value)} theme={theme} placeholder={"Author Name"} />
+                <TextArea value={args.signature} onChange={event => args.setSignature(event.target.value)} theme={theme} placeholder={"Signature"} />
+                <Button onClick={() => args.setCreateAuthor(false)} theme={theme}>
                     Select existing author
                 </Button>
             </AuthorWrapper>
@@ -42,7 +54,7 @@ export const SelectAuthor: React.FC = () => {
     } else {
         return (
             <AuthorWrapper>
-                <CreatableSelect
+                <Selector
                     styles={{
                         control: creatableStyle,
                         option: creatableStyle,
@@ -54,10 +66,10 @@ export const SelectAuthor: React.FC = () => {
                     isLoading={loading}
                     options={data}
                     getOptionLabel={(option: Author) => option.name}
-                    value={value}
-                    onChange={(value: any) => setValue(value)}
-                /><br />
-                <Button onClick={() => setCreateAuthor(true)} theme={theme}>
+                    value={args.selectedAuthor}
+                    onChange={(value: any) => args.setSelectedAuthor(value)}
+                />
+                <Button onClick={() => args.setCreateAuthor(true)} theme={theme}>
                     Create new author
                 </Button>
             </AuthorWrapper>

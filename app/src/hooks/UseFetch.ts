@@ -11,13 +11,15 @@ export function useFetch<T>(url : string){
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<Error | null>(null);
 
-    const fetchData = () => {
+    useEffect(() => {
+        setLoading(true);
         fetch(url, {
             method: "GET"
         }).then(res => {
+            console.log(res);
             if(!res.ok){
                 setError({code: res.status, text: res.statusText});
-                throw res.status + ":" + res.statusText;
+                throw Promise.reject(res.status + ": " + res.statusText);
             }
             return res.json();
         }).then(json => {
@@ -27,11 +29,6 @@ export function useFetch<T>(url : string){
             setLoading(false);
             setError(null);
         });
-    }
-    
-    useEffect(() => {
-        setLoading(true);
-        fetchData();
     }, [url]);
 
     return {data, loading, error};

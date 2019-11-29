@@ -1,6 +1,7 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import styled from "styled-components";
 import { ThemeContext } from "../../../contexts/ThemeContext";
+import { Redirect } from "react-router";
 
 const HeadLine = styled.div`
     border-bottom: 1px solid ${props => props.theme.accent3};
@@ -24,7 +25,7 @@ const Title = styled.p`
 `;
 
 const BackButton = styled.a`
-    color: ${props => props.theme.buttonFont};
+    color: ${props => props.theme.accent3};
 
     cursor: pointer;
     text-decoration: none;
@@ -38,7 +39,7 @@ const BackButton = styled.a`
     }
 
     :hover {
-        color: ${props => props.theme.buttonFontHover};
+        color: ${props => props.theme.accent3Hover};
     }
 `;
 
@@ -48,11 +49,15 @@ export type HeadlineProps = {
 
 export const Headline: React.FC<HeadlineProps> = (args) => {
     const { theme } = useContext(ThemeContext);
+    const [toDashboard, setToDashboard] = useState<boolean>(false);
 
     return (
-        <HeadLine theme={theme}>
-            <BackButton href={"/"} theme={theme}>&#171;</BackButton>
-            <Title>{args.title}</Title>
-        </HeadLine>
+        <>
+            {toDashboard ? <Redirect to="/" /> : null}
+            <HeadLine theme={theme}>
+                <BackButton onClick={() => setToDashboard(true)} theme={theme}>&#171;</BackButton>
+                <Title>{args.title}</Title>
+            </HeadLine>
+        </>
     );
 }
