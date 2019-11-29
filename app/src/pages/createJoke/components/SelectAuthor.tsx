@@ -1,10 +1,11 @@
 import React, { useContext } from "react";
-import { Input, TextArea, Button } from "../PostJokePage";
 import { ThemeContext } from "../../../contexts/ThemeContext";
 import styled from "styled-components";
 import CreatableSelect from "react-select/creatable";
 import { Author } from "../../../types/Author";
 import { useFetch } from "../../../hooks/UseFetch";
+import { Input, TextArea } from "../PostJokePage";
+import { Button } from "../../../components/Button";
 
 const AuthorWrapper = styled.div`
     display: flex;

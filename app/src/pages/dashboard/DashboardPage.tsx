@@ -4,11 +4,11 @@ import { Joke } from "../../types/Joke";
 import { useFetch } from "../../hooks/UseFetch";
 import { ErrorContainer } from "../../components/ErrorContainer";
 import { LoadingContainer } from "../../components/LoadingContainer";
-import { Button } from "../createJoke/PostJokePage";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import styled from "styled-components";
 import { Background } from "../../components/Background";
 import { Redirect } from "react-router";
+import { Button } from "../../components/Button";
 
 export const DashboardWrapper = styled.div`
     display: flex;
@@ -33,7 +33,7 @@ export const DashboardPage: React.FC = () => {
     const { theme } = useContext(ThemeContext);
 
     const [toPostPage, setToPostPage] = useState<boolean>(false);
-    
+
     if(error) return <ErrorContainer error={error} />
     if(data === null || loading) return <LoadingContainer />
     

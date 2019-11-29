@@ -1,8 +1,10 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import styled from "styled-components";
 import { Error } from "../types/Error";
 import { ThemeContext } from "../contexts/ThemeContext";
 import { Background } from "./Background";
+import { Button } from "./Button";
+import { Redirect } from "react-router";
 
 const ErrorWrapper = styled.div`
     display: flex;
@@ -43,14 +45,17 @@ export type ErrorComponentProps = {
 
 export const ErrorContainer: React.FC<ErrorComponentProps> = (args) => {
     const { theme } = useContext(ThemeContext);
+    const [toDashboard, setToDashboard] = useState<boolean>(false);
     
     return (
         <>
+        {toDashboard ? <Redirect to="/"/> : null}
         <Background />
         <ErrorWrapper theme={theme}>
             <ErrorTitle>Oops!</ErrorTitle>
             <ErrorCode>{args.error.code}</ErrorCode>
             <ErrorText>{args.error.text}</ErrorText>
+            <Button style={{alignSelf: "center", margin: "3rem"}} theme={theme} onClick={() => setToDashboard(true)}>Back to dashboard</Button>
         </ErrorWrapper>
         </>
     );

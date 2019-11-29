@@ -11,6 +11,7 @@ const SwitchContainer = styled.div`
     right: 0;
     z-index: 5;
     border-radius: 1rem;
+    opacity: .5;
 `;
 
 const Label = styled.p`

@@ -10,6 +10,7 @@ import { useFetch } from "../../hooks/UseFetch";
 import { ErrorContainer } from "../../components/ErrorContainer";
 import { LoadingContainer } from "../../components/LoadingContainer";
 import { Background } from "../../components/Background";
+import { PatchDelete } from "./components/PatchDelete";
 
 export const Text = styled.p`
     color: ${props => props.theme.textFont};
@@ -19,7 +20,7 @@ export const Text = styled.p`
     margin: 0;
     padding-bottom: 0;
     font-size: 1rem;
-    
+
     @media all and (min-width: 800px) {
         font-size: 2rem;
         padding: 4rem;
@@ -39,7 +40,6 @@ export type JokePageProps = {
     routerProps: any
 }
 
-//TODO Delete button
 export const JokePage: React.FC<JokePageProps> = (args) => {
     const { theme } = useContext(ThemeContext);
     const { data, loading, error } = useFetch<Joke>("/api/v1/joke/" + args.routerProps.match.params.id);
@@ -58,6 +58,7 @@ export const JokePage: React.FC<JokePageProps> = (args) => {
                 <br />
                 Updated: {data.updatedAt.substring(0, 10)}
             </Timestamp>
+            <PatchDelete joke={data} />
             <AuthorSignature author={data.author} />
             <GifGrid jokeId={data.id} />
         </div>
