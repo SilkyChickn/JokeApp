@@ -1,14 +1,16 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import styled from "styled-components";
 import { ThemeContext } from "../../contexts/ThemeContext";
-import { SelectAuthor } from "./components/SelectAuthor";
-import { JokeCreateData } from "../../types/Joke";
+import { JokeCreateData, Joke, JokePatchData } from "../../types/Joke";
 import { Error } from "../../types/Error";
-import { ErrorBanner } from "../../components/ErrorBanner";
-import { Author, AuthorCreateData } from "../../types/Author";
 import { Background } from "../../components/Background";
 import { Redirect } from "react-router";
 import { Button } from "../../components/Button";
+import { ErrorBanner } from "../../components/ErrorBanner";
+import { AuthorSignature } from "../../components/AuthorSignature";
+import { useFetch } from "../../hooks/UseFetch";
+import { ErrorContainer } from "../../components/ErrorContainer";
+import { LoadingContainer } from "../../components/LoadingContainer";
 
 const Form = styled.form`
     display: flex;
@@ -70,86 +72,59 @@ export const Seperator = styled.div`
     margin-bottom: 2rem;
 `;
 
-export const PostJokePage: React.FC = () => {
+export type PatchJokePageProps = {
+    routerProps: any
+}
+
+export const PatchJokePage: React.FC<PatchJokePageProps> = (args) => {
     const { theme } = useContext(ThemeContext);
+    const { data, loading, error } = useFetch<Joke>("/api/v1/joke/" + args.routerProps.match.params.id);
     
-    const [toDashboard, setToDashboard] = useState<boolean>(false);
+    const [toJokePage, setToJokePage] = useState<boolean>(false);
 
     const [title, setTitle] = useState<string>("");
     const [text, setText] = useState<string>("");
     const [visible, setVisible] = useState<boolean>(true);
-    const [author, setAuthor] = useState<Author>();
+    
+    const [errorMessage, setErrorMessage] = useState<Error | null>(null);
 
-    const [createAuthor, setCreateAuthor] = useState<boolean>(false);
-    const [newAuthorName, setNewAuthorName] = useState<string>("");
-    const [newAuthorSignature, setNewAuthorSignature] = useState<string>("");
+    useEffect(() => {
+        setTitle(data == null ? "" : data.title);
+        setText(data == null ? "" : data.text);
+        setVisible(data == null ? true : data.visibility === "visible" ? true : false);
+    }, [data]);
 
-    const [error, setError] = useState<Error | null>(null);
-
+    if(error) return <ErrorContainer error={error} />
+    if(data === null || loading) return <LoadingContainer />
+    
     const cancel = () => {
-        setToDashboard(true);
+        setToJokePage(true);
     }
-
+    
     const closeError = () => {
-        setError(null);
+        setErrorMessage(null);
     }
 
     const throwError = (code: number, message: string) => {
-        setError({ code: code, text: message });
+        setErrorMessage({ code: code, text: message });
         throw Promise.reject(code + ": " + message);
     }
 
-    const postAuthor = async () => {
-        if(createAuthor){
-            const authorData: AuthorCreateData = {
-                name: newAuthorName,
-                signature: newAuthorSignature
-            }
-            
-            const res: Response = await fetch("/api/v1/author/", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(authorData)
-            });
-
-            if(res.status === 500){
-                throwError(res.status, res.statusText);
-            }else if(!res.ok){
-                const data = await res.json();
-                if(data.error !== undefined) throwError(res.status, data.error);
-                else throwError(res.status, data.status);
-            }
-            const data: any = await res.json();
-            
-            const createdAuthor: Author = data.data as Author;
-            setAuthor(createdAuthor);
-            setCreateAuthor(false);
-
-            return createdAuthor;
-        }else{
-            return author;
+    const patchJoke = () => {
+        const patchData: JokePatchData = {
+            title: title,
+            text: text,
+            visibility: visible ? "visible" : "hidden",
+            funniness: data.funniness,
+            authorId: data.author.id
         }
-    }
-
-    const postJoke = () => {
-        postAuthor().then((author) => {
-            
-            const createData: JokeCreateData = {
-                title: title,
-                text: text,
-                visibility: visible ? "visible" : "hidden",
-                authorId: author === undefined ? "" : author.id
-            }
-            
-            return fetch("/api/v1/joke/", {
-                method: "POST",
+        
+        fetch("/api/v1/joke/" + data.id, {
+                method: "PATCH",
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify(createData)
-            });
+                body: JSON.stringify(patchData)
         }).then(async res => {
             if (res.status === 500) {
                 throwError(res.status, res.statusText);
@@ -167,24 +142,15 @@ export const PostJokePage: React.FC = () => {
     
     return (
         <>
-            {toDashboard ? <Redirect to="/" /> : null}
+            {toJokePage ? <Redirect to={"/joke/" + data.id} /> : null}
             <Background />
-            <ErrorBanner error={error} closeError={closeError} />
+            <ErrorBanner error={errorMessage} closeError={closeError} />
             <Form theme={theme}>
                 <Input value={title} onChange={event => setTitle(event.target.value)} theme={theme} placeholder={"Title"} />
                 <TextArea value={text} onChange={event => setText(event.target.value)} theme={theme} placeholder={"Joke..."} />
                 <Seperator theme={theme} />
-                <SelectAuthor
-                    setName={setNewAuthorName}
-                    name={newAuthorName}
-                    setSignature={setNewAuthorSignature}
-                    signature={newAuthorSignature}
-                    createAuthor={createAuthor}
-                    setCreateAuthor={setCreateAuthor}
-                    selectedAuthor={author}
-                    setSelectedAuthor={setAuthor}
-                />
-                <Seperator theme={theme} />
+                <AuthorSignature author={data.author} />
+                <div style={{height: "2rem"}} />
                 <div style={{ display: "flex", justifyContent: "flex-end", alignItems: "baseline" }}>
                     <label style={{ marginRight: "2rem" }}>
                         <Input checked={visible} onChange={event => setVisible(event.target.checked)} theme={theme} type={"checkbox"} />
@@ -192,7 +158,7 @@ export const PostJokePage: React.FC = () => {
                     </label>
                     <Button type="button" onClick={cancel} theme={theme}>Cancel</Button>
                     <div style={{ width: "1rem" }} />
-                    <Button type="button" onClick={postJoke} theme={theme}>Post Joke</Button>
+                    <Button type="button" onClick={patchJoke} theme={theme}>Save Changes</Button>
                 </div>
             </Form>
         </>

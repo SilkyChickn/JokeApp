@@ -9,6 +9,7 @@ import styled from "styled-components";
 import { Background } from "../../components/Background";
 import { Redirect } from "react-router";
 import { Button } from "../../components/Button";
+import { Toolbar } from "./components/Toolbar";
 
 export const DashboardWrapper = styled.div`
     display: flex;
@@ -25,34 +26,33 @@ export const DashboardWrapper = styled.div`
     }
 `;
 
-//TODO Delete button for jokes
-//TODO Sort button
-//TODO Patch button
 export const DashboardPage: React.FC = () => {
-    const {data, error, loading} = useFetch<Joke[]>("/api/v1/joke/");
     const { theme } = useContext(ThemeContext);
 
-    const [toPostPage, setToPostPage] = useState<boolean>(false);
-
+    const [minFunniness, setMinFunniness] = useState<number>(0);
+    const [sortBy, setSortBy] = useState<string>("Funniness");
+    const {data, error, loading} = useFetch<Joke[]>
+        ("/api/v1/joke/?minFunniness=" + minFunniness + "&sortBy=" + sortBy);
+    
     if(error) return <ErrorContainer error={error} />
     if(data === null || loading) return <LoadingContainer />
     
     return (
         <>
-        {toPostPage ? <Redirect to="/create" /> : null}
-        <Background />
-        <DashboardWrapper theme={theme}>
-            <Button 
-                onClick={() => setToPostPage(true)} 
-                style={{margin: "2rem"}} theme={theme}>
-                Post new Joke
-            </Button>
-            <JokeList>{
-                data.map(joke => {
-                    return <JokeItem joke={joke} />
-                })
-            }</JokeList>
-        </DashboardWrapper>
+            <Background />
+            <DashboardWrapper theme={theme}>
+                <Toolbar 
+                    sortBy={sortBy} 
+                    setSortBy={setSortBy} 
+                    minFunniness={minFunniness} 
+                    setMinFunniness={setMinFunniness}
+                />
+                <JokeList>{
+                    data.map(joke => {
+                        return <JokeItem joke={joke} />
+                    })
+                }</JokeList>
+            </DashboardWrapper>
         </>
     );
 }

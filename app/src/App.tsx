@@ -5,6 +5,7 @@ import { DashboardPage } from './pages/dashboard/DashboardPage';
 import { JokePage } from './pages/joke/JokePage';
 import { PostJokePage } from './pages/createJoke/PostJokePage';
 import { ThemeSwitch } from './components/ThemeSwitch';
+import { PatchJokePage } from './pages/patchJoke/PatchJokePage';
 
 const App: React.FC = () => {
     return (
@@ -12,6 +13,9 @@ const App: React.FC = () => {
             <ThemeContextProvider>
                 <ThemeSwitch />
                 <Switch>
+                    <Route path="/joke/:id/edit">{(props) => {
+                        return <PatchJokePage routerProps={props} />
+                    }}</Route>
                     <Route path="/joke/:id">{(props) => {
                         return <JokePage routerProps={props} />
                     }}</Route>

@@ -6,7 +6,7 @@ export const Button = styled.button`
 
     justify-self: right;
     font-size: 1rem;
-
+    
     border: 0;
     border-radius: .5rem;
     padding: .5rem;

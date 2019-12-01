@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import styled from "styled-components";
 import { ThemeContext } from "../contexts/ThemeContext";
 
@@ -7,11 +7,15 @@ const SwitchContainer = styled.div`
     position: fixed;
     width: 6.5rem;
     height: 5.5rem;
-    top: 0;
+    bottom: 0;
     right: 0;
     z-index: 5;
     border-radius: 1rem;
     opacity: .5;
+
+    @media all and (min-width: 800px){
+        top: 0;
+    }
 `;
 
 const Label = styled.p`

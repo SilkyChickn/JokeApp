@@ -1,5 +1,5 @@
 import { Response, Request, NextFunction } from "express";
-import { Repository, getRepository, MoreThanOrEqual } from "typeorm";
+import { Repository, getRepository, MoreThanOrEqual, FindOptionsUtils, FindOneOptions } from "typeorm";
 import { Joke } from "../entities/joke";
 import { Author } from "../entities/author";
 import { validate } from "class-validator";
@@ -20,13 +20,19 @@ export class JokeController {
         
         //Query parameters
         const minFunniness = req.query.minFunniness == undefined ? 0 : req.query.minFunniness;
-
+        const sortBy: string = req.query.sortBy == undefined ? "Funniness" : req.query.sortBy;
+        
         //Get visible jokes
         const jokeRepo: Repository<Joke> = getRepository(Joke);
         const jokes: Joke[] = await jokeRepo.find({
             where: {
                 visibility: "visible",
                 funniness: MoreThanOrEqual(minFunniness)
+            },
+            order: {
+                funniness: sortBy.toUpperCase() === "FUNNINESS" ? "DESC" : undefined,
+                author: sortBy.toUpperCase() === "AUTHOR" ? "DESC" : undefined,
+                title: sortBy.toUpperCase() === "TITLE" ? "ASC" : undefined
             }
         });
         res.send({ status: "ok", data: jokes });
@@ -208,7 +214,10 @@ export class JokeController {
             //Validate joke
             const errors = await validate(joke);
             if(errors.length > 0){
-                res.status(400).send({ status: "bad request", errors: errors[0].constraints });
+                res.status(400).send({ 
+                    status: "bad request", 
+                    error: errors[0].constraints[Object.keys(errors[0].constraints)[0]] 
+                });
                 return;
             }
 

@@ -19,6 +19,7 @@ export type PatchDeleteProps = {
 export const PatchDelete: React.FC<PatchDeleteProps> = (args) => {
     const { theme } = useContext(ThemeContext);
     const [toDashboard, setToDashboard] = useState<boolean>(false);
+    const [toPatchJoke, setToPatchJoke] = useState<boolean>(false);
 
     const deleteJoke = () => {
         if(!window.confirm("Are you sure to delete the joke?")) return;
@@ -34,8 +35,9 @@ export const PatchDelete: React.FC<PatchDeleteProps> = (args) => {
     return (
         <>
         {toDashboard ? <Redirect to="/" /> : null}
+        {toPatchJoke ? <Redirect to={"/joke/" + args.joke.id + "/edit"} /> : null}
         <DeletePatchWrapper>
-            <Button onClick={() => alert("Not implemented yet :/")} theme={theme}>Edit</Button>
+            <Button onClick={() => setToPatchJoke(true)} theme={theme}>Edit</Button>
             <div style={{width: ".5rem"}} />
             <Button onClick={deleteJoke} style={{backgroundColor: theme.dislikeHover}} theme={theme}>Delete</Button>
         </DeletePatchWrapper>

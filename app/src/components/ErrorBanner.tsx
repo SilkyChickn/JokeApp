@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Error } from "../../../types/Error";
+import { Error } from "../types/Error";
 
 const ErrorWrapper = styled.div`
     background-color: rgb(256, 90, 90);
