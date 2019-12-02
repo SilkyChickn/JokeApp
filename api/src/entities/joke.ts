@@ -13,13 +13,13 @@ export class Joke {
     @Column()
     @IsString({ message: "The title has to be a string" })
     @MinLength(3, { message: "The title is too short (min 3)" })
-    @MaxLength(32, { message: "The title is too long (max 32)" })
+    @MaxLength(128, { message: "The title is too long (max 128)" })
     title: string;
 
     @Column({ type: 'text' })
     @IsString({ message: "The text has to be a string" })
     @MinLength(3, { message: "The text is too short (min 3)" })
-    @MaxLength(512, { message: "The text is too long (max 512)" })
+    @MaxLength(1024, { message: "The text is too long (max 1024)" })
     text: string;
     
     @Column({ default: 'visible' })

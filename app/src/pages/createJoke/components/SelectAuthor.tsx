@@ -6,6 +6,10 @@ import { useFetch } from "../../../hooks/UseFetch";
 import { Button, TextArea, Input } from "../../../components/FormItems";
 import Creatable from "react-select/creatable";
 
+const CreatableMargin = styled(Creatable)`
+    margin-bottom: 1rem;
+`;
+
 const AuthorWrapper = styled.div`
     display: flex;
     flex-direction: column;
@@ -42,7 +46,9 @@ export const SelectAuthor: React.FC<SelectAuthorProps> = (args) => {
         return (
             <AuthorWrapper>
                 <Input value={args.name} onChange={event => args.setName(event.target.value)} theme={theme} placeholder={"Author Name"} />
+                <div style={{height:"1rem"}} />
                 <TextArea value={args.signature} onChange={event => args.setSignature(event.target.value)} theme={theme} placeholder={"Signature"} />
+                <div style={{height:"1rem"}} />
                 <Button onClick={() => args.setCreateAuthor(false)} theme={theme}>
                     Select existing author
                 </Button>
@@ -53,7 +59,7 @@ export const SelectAuthor: React.FC<SelectAuthorProps> = (args) => {
     } else {
         return (
             <AuthorWrapper>
-                <Creatable
+                <CreatableMargin
                     styles={{
                         control: creatableStyle,
                         option: creatableStyle,
@@ -69,7 +75,6 @@ export const SelectAuthor: React.FC<SelectAuthorProps> = (args) => {
                     value={args.selectedAuthor}
                     onChange={(value: any) => args.setSelectedAuthor(value)}
                 />
-                <div style={{height:"1rem"}} />
                 <Button onClick={() => args.setCreateAuthor(true)} theme={theme}>
                     Create new author
                 </Button>

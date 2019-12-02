@@ -105,7 +105,7 @@ export class JokeController {
         try {
             const joke: Joke = await jokeRepo.findOneOrFail(jokeId);
 
-            const keywords: string[] = await CortialIO.getKeywords(joke.text);
+            const keywords: string[] = await CortialIO.getKeywords(joke.title + ". " + joke.text);
 
             //Getting gifs for keywords
             try {
