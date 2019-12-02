@@ -3,12 +3,14 @@ import styled from "styled-components";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import { SelectAuthor } from "./components/SelectAuthor";
 import { JokeCreateData } from "../../types/Joke";
-import { Error } from "../../types/Error";
 import { ErrorBanner } from "../../components/ErrorBanner";
 import { Author, AuthorCreateData } from "../../types/Author";
 import { Background } from "../../components/Background";
 import { Redirect } from "react-router";
 import { Button } from "../../components/Button";
+import { SelectCategories } from "./components/SelectCategories";
+import { Category } from "../../types/Category";
+import { ErrorContext } from "../../contexts/ErrorContext";
 
 const Form = styled.form`
     display: flex;
@@ -23,7 +25,6 @@ export const Input = styled.input`
     
     font-size: 1rem;
     padding: .5rem;
-    margin-bottom: 2rem;
     
     border: 2px solid ${props => props.theme.accent1};
     border-radius: .5rem;
@@ -46,7 +47,6 @@ export const TextArea = styled.textarea`
     padding: .5rem;
     min-width: 100%;
     max-width: 100%;
-    margin-bottom: 2rem;
     height: 10rem;
     
     border: 2px solid ${props => props.theme.accent1};
@@ -68,10 +68,12 @@ export const Seperator = styled.div`
     height: .2rem;
     width: 100%;
     margin-bottom: 2rem;
+    margin-top: 2rem;
 `;
 
 export const PostJokePage: React.FC = () => {
     const { theme } = useContext(ThemeContext);
+    const { closeError, setError } = useContext(ErrorContext);
     
     const [toDashboard, setToDashboard] = useState<boolean>(false);
 
@@ -79,19 +81,14 @@ export const PostJokePage: React.FC = () => {
     const [text, setText] = useState<string>("");
     const [visible, setVisible] = useState<boolean>(true);
     const [author, setAuthor] = useState<Author>();
+    const [categories, setCategories] = useState<Category[]>([]);
 
     const [createAuthor, setCreateAuthor] = useState<boolean>(false);
     const [newAuthorName, setNewAuthorName] = useState<string>("");
     const [newAuthorSignature, setNewAuthorSignature] = useState<string>("");
 
-    const [error, setError] = useState<Error | null>(null);
-
     const cancel = () => {
         setToDashboard(true);
-    }
-
-    const closeError = () => {
-        setError(null);
     }
 
     const throwError = (code: number, message: string) => {
@@ -126,13 +123,30 @@ export const PostJokePage: React.FC = () => {
             const createdAuthor: Author = data.data as Author;
             setAuthor(createdAuthor);
             setCreateAuthor(false);
-
+            
             return createdAuthor;
         }else{
             return author;
         }
     }
 
+    const addCategories = async (jokeId: string) => {
+        categories.forEach(async (cat: Category) => {
+            const res: Response = await fetch(
+                "/api/v1/joke/" + jokeId + "/category/" + cat.id, {
+                method: "POST"
+            });
+            
+            if (res.status === 500) {
+                throwError(res.status, res.statusText);
+            } else if (!res.ok) {
+                const data = await res.json();
+                if (data.error !== undefined) throwError(res.status, data.error);
+                else throwError(res.status, data.status);
+            }
+        });
+    }
+    
     const postJoke = () => {
         postAuthor().then((author) => {
             
@@ -159,6 +173,8 @@ export const PostJokePage: React.FC = () => {
                 else throwError(res.status, data.status);
             }
             return res.json();
+        }).then((data: any) => {
+            addCategories(data.data.id);
         }).then(() => {
             closeError();
             cancel();
@@ -169,10 +185,13 @@ export const PostJokePage: React.FC = () => {
         <>
             {toDashboard ? <Redirect to="/" /> : null}
             <Background />
-            <ErrorBanner error={error} closeError={closeError} />
+            <ErrorBanner />
             <Form theme={theme}>
                 <Input value={title} onChange={event => setTitle(event.target.value)} theme={theme} placeholder={"Title"} />
+                <div style={{height:"1rem"}} />
                 <TextArea value={text} onChange={event => setText(event.target.value)} theme={theme} placeholder={"Joke..."} />
+                <div style={{height:"1rem"}} />
+                <SelectCategories values={categories} setValues={setCategories} />
                 <Seperator theme={theme} />
                 <SelectAuthor
                     setName={setNewAuthorName}

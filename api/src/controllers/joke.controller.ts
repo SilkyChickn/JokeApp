@@ -32,6 +32,8 @@ export class JokeController {
             order: {
                 funniness: sortBy.toUpperCase() === "FUNNINESS" ? "DESC" : undefined,
                 author: sortBy.toUpperCase() === "AUTHOR" ? "DESC" : undefined,
+                createdAt: sortBy.toUpperCase() === "NEWEST" ? "DESC" : undefined,
+                updatedAt: sortBy.toUpperCase() === "LASTEDITED" ? "DESC" : undefined,
                 title: sortBy.toUpperCase() === "TITLE" ? "ASC" : undefined
             }
         });

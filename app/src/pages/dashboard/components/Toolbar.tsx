@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Button } from "../../../components/Button";
 import { ThemeContext } from "../../../contexts/ThemeContext";
 import { Redirect } from "react-router";
+import { ErrorContext } from "../../../contexts/ErrorContext";
 
 const ToolbarWrapper = styled.div`
     display: flex;
@@ -40,11 +41,26 @@ export type ToolbarProps = {
 
 export const Toolbar: React.FC<ToolbarProps> = (args) => {
     const { theme } = useContext(ThemeContext);
-
+    const { setError } = useContext(ErrorContext);
+    
     const [toPostPage, setToPostPage] = useState<boolean>(false);
 
     const downloadJokes = () => {
-        alert("Not implemented yet :/");
+        fetch("/api/v1/joke/jokes.csv", {
+            method: "GET"
+        }).then((res: Response) => {
+            if(!res.ok){
+                setError({code: res.status, text: res.statusText});
+                throw Promise.reject();
+            }
+
+            return res.blob();
+        }).then((res: Blob) => {
+            const tempLink = document.createElement('a');
+            tempLink.href = window.URL.createObjectURL(res);
+            tempLink.setAttribute('download', 'jokes.csv');
+            tempLink.click();
+        });
     }
 
     return (
@@ -70,6 +86,8 @@ export const Toolbar: React.FC<ToolbarProps> = (args) => {
                 }}>↓≡</span>
                 <FilterBox value={args.sortBy} onChange={(e) => args.setSortBy(e.target.value)} theme={theme}>
                     <option>Funniness</option>
+                    <option>Newest</option>
+                    <option>LastEdited</option>
                     <option>Author</option>
                     <option>Title</option>
                 </FilterBox>

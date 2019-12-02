@@ -6,26 +6,29 @@ import { JokePage } from './pages/joke/JokePage';
 import { PostJokePage } from './pages/createJoke/PostJokePage';
 import { ThemeSwitch } from './components/ThemeSwitch';
 import { PatchJokePage } from './pages/patchJoke/PatchJokePage';
+import { ErrorContextProvider } from './contexts/ErrorContext';
 
 const App: React.FC = () => {
     return (
         <Router>
             <ThemeContextProvider>
-                <ThemeSwitch />
-                <Switch>
-                    <Route path="/joke/:id/edit">{(props) => {
-                        return <PatchJokePage routerProps={props} />
-                    }}</Route>
-                    <Route path="/joke/:id">{(props) => {
-                        return <JokePage routerProps={props} />
-                    }}</Route>
-                    <Route path="/create">
-                        <PostJokePage />
-                    </Route>
-                    <Route path="/">
-                        <DashboardPage />
-                    </Route>
-                </Switch>
+                <ErrorContextProvider>
+                    <ThemeSwitch />
+                    <Switch>
+                        <Route path="/joke/:id/edit">{(props) => {
+                            return <PatchJokePage routerProps={props} />
+                        }}</Route>
+                        <Route path="/joke/:id">{(props) => {
+                            return <JokePage routerProps={props} />
+                        }}</Route>
+                        <Route path="/create">
+                            <PostJokePage />
+                        </Route>
+                        <Route path="/">
+                            <DashboardPage />
+                        </Route>
+                    </Switch>
+                </ErrorContextProvider>
             </ThemeContextProvider>
         </Router>
     );

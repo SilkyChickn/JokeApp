@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
-import { Error } from "../types/Error";
+import { ErrorContext } from "../contexts/ErrorContext";
 
 const ErrorWrapper = styled.div`
     background-color: rgb(256, 90, 90);
@@ -20,26 +20,23 @@ const CloseError = styled.a`
     padding: .2rem;
     font-size: .5rem;
     cursor: pointer;
-
+    
     :hover {
         background-color: rgb(256, 100, 100);
     }
 `;
 
-export type ErrorBannerProps = {
-    error: Error | null,
-    closeError: () => void
-}
+export const ErrorBanner: React.FC = (args) => {
+    const { error, closeError } = useContext(ErrorContext);
 
-export const ErrorBanner: React.FC<ErrorBannerProps> = (args) => {
-    if(args.error === null) return <></>
+    if(error === null) return <></>
 
     return (
         <ErrorWrapper>
             <div style={{ flex: 1 }}>
-            { args.error.code + ": " + args.error.text }
+            { error.code + ": " + error.text }
             </div> 
-        <CloseError onClick={args.closeError}>Close</CloseError>
+            <CloseError onClick={closeError}>Close</CloseError>
         </ErrorWrapper>
     );
 }

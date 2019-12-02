@@ -16,7 +16,6 @@ export function useFetch<T>(url : string){
         fetch(url, {
             method: "GET"
         }).then(res => {
-            console.log(res);
             if(!res.ok){
                 setError({code: res.status, text: res.statusText});
                 throw Promise.reject(res.status + ": " + res.statusText);

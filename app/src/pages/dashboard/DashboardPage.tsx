@@ -7,8 +7,6 @@ import { LoadingContainer } from "../../components/LoadingContainer";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import styled from "styled-components";
 import { Background } from "../../components/Background";
-import { Redirect } from "react-router";
-import { Button } from "../../components/Button";
 import { Toolbar } from "./components/Toolbar";
 
 export const DashboardWrapper = styled.div`
@@ -33,7 +31,7 @@ export const DashboardPage: React.FC = () => {
     const [sortBy, setSortBy] = useState<string>("Funniness");
     const {data, error, loading} = useFetch<Joke[]>
         ("/api/v1/joke/?minFunniness=" + minFunniness + "&sortBy=" + sortBy);
-    
+
     if(error) return <ErrorContainer error={error} />
     if(data === null || loading) return <LoadingContainer />
     

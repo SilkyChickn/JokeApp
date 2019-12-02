@@ -31,7 +31,7 @@ export const PatchDelete: React.FC<PatchDeleteProps> = (args) => {
             }
         });
     }
-
+    
     return (
         <>
         {toDashboard ? <Redirect to="/" /> : null}

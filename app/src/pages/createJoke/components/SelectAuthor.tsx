@@ -1,20 +1,15 @@
 import React, { useContext } from "react";
 import { ThemeContext } from "../../../contexts/ThemeContext";
 import styled from "styled-components";
-import CreatableSelect from "react-select/creatable";
 import { Author } from "../../../types/Author";
 import { useFetch } from "../../../hooks/UseFetch";
 import { Input, TextArea } from "../PostJokePage";
 import { Button } from "../../../components/Button";
+import Creatable from "react-select/creatable";
 
 const AuthorWrapper = styled.div`
     display: flex;
     flex-direction: column;
-    margin-bottom: 2rem;
-`;
-
-const Selector = styled(CreatableSelect)`
-    margin-bottom: 1rem;
 `;
 
 export type SelectAuthorProps = {
@@ -55,7 +50,7 @@ export const SelectAuthor: React.FC<SelectAuthorProps> = (args) => {
     } else {
         return (
             <AuthorWrapper>
-                <Selector
+                <Creatable
                     styles={{
                         control: creatableStyle,
                         option: creatableStyle,
@@ -64,12 +59,14 @@ export const SelectAuthor: React.FC<SelectAuthorProps> = (args) => {
                         input: creatableStyle,
                         noOptionsMessage: creatableStyle
                     }}
+                    placeholder={"Select author..."}
                     isLoading={loading}
                     options={data}
                     getOptionLabel={(option: Author) => option.name}
                     value={args.selectedAuthor}
                     onChange={(value: any) => args.setSelectedAuthor(value)}
                 />
+                <div style={{height:"1rem"}} />
                 <Button onClick={() => args.setCreateAuthor(true)} theme={theme}>
                     Create new author
                 </Button>
