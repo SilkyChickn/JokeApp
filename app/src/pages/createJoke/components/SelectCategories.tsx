@@ -16,6 +16,7 @@ export const SelectCategories: React.FC<SelectCategoriesProps> = (args) => {
 
     const { data, loading } = useFetch("/api/v1/category/");
 
+    //Style for creatable
     const creatableStyle = (provided: React.CSSProperties) => {
         return {
             ...provided,
@@ -26,6 +27,7 @@ export const SelectCategories: React.FC<SelectCategoriesProps> = (args) => {
         };
     }
     
+    //Creatable values changing
     const valuesChanged = (value: any, actionMeta: any) => {
         if(actionMeta.action === "create-option"){
             value.forEach((element: any) => {
@@ -73,7 +75,7 @@ export const SelectCategories: React.FC<SelectCategoriesProps> = (args) => {
             args.setValues([...args.values, cat]);
         });
     }
-
+    
     return (
         <>
             <Creatable 

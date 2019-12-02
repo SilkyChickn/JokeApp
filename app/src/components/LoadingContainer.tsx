@@ -1,8 +1,7 @@
 import React, { useContext, useState } from "react";
 import styled from "styled-components";
-import { Background } from "./Background";
 import { ThemeContext } from "../contexts/ThemeContext";
-import { Button } from "./Button";
+import { Button } from "./FormItems";
 import { Redirect } from "react-router";
 
 const LoadingText = styled.p`
@@ -23,7 +22,6 @@ export const LoadingContainer: React.FC = () => {
     return (
         <div style={{display: "flex", flexDirection:"column"}}>
             {toDashboard ? <Redirect to="/"/> : null}
-            <Background />
             <LoadingText theme={theme}>Loading...</LoadingText>
             <Button style={{alignSelf: "center", margin: "3rem"}} theme={theme} onClick={() => setToDashboard(true)}>Back to dashboard</Button>
         </div>

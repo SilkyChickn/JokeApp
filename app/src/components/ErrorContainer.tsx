@@ -2,8 +2,7 @@ import React, { useContext, useState } from "react";
 import styled from "styled-components";
 import { Error } from "../types/Error";
 import { ThemeContext } from "../contexts/ThemeContext";
-import { Background } from "./Background";
-import { Button } from "./Button";
+import { Button } from "./FormItems";
 import { Redirect } from "react-router";
 
 const ErrorWrapper = styled.div`
@@ -50,7 +49,6 @@ export const ErrorContainer: React.FC<ErrorComponentProps> = (args) => {
     return (
         <>
         {toDashboard ? <Redirect to="/"/> : null}
-        <Background />
         <ErrorWrapper theme={theme}>
             <ErrorTitle>Oops!</ErrorTitle>
             <ErrorCode>{args.error.code}</ErrorCode>

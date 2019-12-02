@@ -9,7 +9,6 @@ import { Headline } from "./components/Headline";
 import { useFetch } from "../../hooks/UseFetch";
 import { ErrorContainer } from "../../components/ErrorContainer";
 import { LoadingContainer } from "../../components/LoadingContainer";
-import { Background } from "../../components/Background";
 import { PatchDelete } from "./components/PatchDelete";
 
 export const Text = styled.p`
@@ -43,13 +42,12 @@ export type JokePageProps = {
 export const JokePage: React.FC<JokePageProps> = (args) => {
     const { theme } = useContext(ThemeContext);
     const { data, loading, error } = useFetch<Joke>("/api/v1/joke/" + args.routerProps.match.params.id);
-
+    
     if(error) return <ErrorContainer error={error} />
     if(data === null || loading) return <LoadingContainer />
     
     return (
         <div style={{color: theme.textFont}}>
-            <Background />
             <Headline title={data.title} />
             <Text>{data.text}</Text>
             <CategoryFunniness joke={data} />

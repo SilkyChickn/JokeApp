@@ -13,6 +13,6 @@ const BackgroundDiv = styled.div`
 
 export const Background = () => {
     const { theme } = useContext(ThemeContext);
-
+    
     return <BackgroundDiv theme={theme} />
 }

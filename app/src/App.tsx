@@ -7,6 +7,8 @@ import { PostJokePage } from './pages/createJoke/PostJokePage';
 import { ThemeSwitch } from './components/ThemeSwitch';
 import { PatchJokePage } from './pages/patchJoke/PatchJokePage';
 import { ErrorContextProvider } from './contexts/ErrorContext';
+import { ErrorBanner } from './components/ErrorBanner';
+import { Background } from './components/Background';
 
 const App: React.FC = () => {
     return (
@@ -14,6 +16,8 @@ const App: React.FC = () => {
             <ThemeContextProvider>
                 <ErrorContextProvider>
                     <ThemeSwitch />
+                    <ErrorBanner />
+                    <Background />
                     <Switch>
                         <Route path="/joke/:id/edit">{(props) => {
                             return <PatchJokePage routerProps={props} />

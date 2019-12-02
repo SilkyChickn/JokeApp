@@ -3,8 +3,7 @@ import { ThemeContext } from "../../../contexts/ThemeContext";
 import styled from "styled-components";
 import { Author } from "../../../types/Author";
 import { useFetch } from "../../../hooks/UseFetch";
-import { Input, TextArea } from "../PostJokePage";
-import { Button } from "../../../components/Button";
+import { Button, TextArea, Input } from "../../../components/FormItems";
 import Creatable from "react-select/creatable";
 
 const AuthorWrapper = styled.div`
@@ -27,6 +26,7 @@ export const SelectAuthor: React.FC<SelectAuthorProps> = (args) => {
     const { theme } = useContext(ThemeContext);
     const { data, loading } = useFetch("/api/v1/author/");
 
+    //Style for creatable
     const creatableStyle = (provided: React.CSSProperties) => {
         return {
             ...provided,
@@ -37,6 +37,7 @@ export const SelectAuthor: React.FC<SelectAuthorProps> = (args) => {
         };
     }
     
+    //Create new author
     if (args.createAuthor) {
         return (
             <AuthorWrapper>
@@ -47,6 +48,8 @@ export const SelectAuthor: React.FC<SelectAuthorProps> = (args) => {
                 </Button>
             </AuthorWrapper>
         );
+
+    //Selecting existing author
     } else {
         return (
             <AuthorWrapper>

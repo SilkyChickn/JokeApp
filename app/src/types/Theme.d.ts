@@ -34,5 +34,13 @@ export type Theme = {
     dislike: string,
     dislikeHover: string,
     dislikeClicked: string,
-    funninessFont: string
+    funninessFont: string,
+
+    /**Error banner colors
+     */
+    errorBackground: string,
+    errorFont: string,
+    errorCloseButtonBackground: string,
+    errorCloseButtonFont: string,
+    errorCloseButtonBackgroundHover: string
 }

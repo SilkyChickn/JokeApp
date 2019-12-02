@@ -24,5 +24,11 @@ export const Light: Theme = {
     dislike: "#b55",
     dislikeClicked: "#f55",
     dislikeHover: "#d55",
-    funninessFont: "#666"
+    funninessFont: "#666",
+    
+    errorBackground: "rgb(256, 90, 90)",
+    errorFont: "rgb(256, 200, 200)",
+    errorCloseButtonBackground: "rgb(256, 128, 128)",
+    errorCloseButtonFont: "rgb(256, 50, 50)",
+    errorCloseButtonBackgroundHover: "rgb(256, 100, 100)"
 }

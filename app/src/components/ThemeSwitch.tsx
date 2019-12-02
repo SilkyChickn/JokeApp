@@ -57,6 +57,8 @@ const Slider = styled.div<SliderProps>`
     transform: ${props => props.checked ? "translateX(1.5rem)" : "translateX(.25rem)"};
 `;
 
+/**Changes theme in theme context
+ */
 export const ThemeSwitch: React.FC = () => {
     const { theme, darkMode, setDarkmode } = useContext(ThemeContext);
 

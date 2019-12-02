@@ -1,6 +1,7 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext } from "react";
 import styled, { keyframes } from "styled-components";
 import { ThemeContext } from "../../../contexts/ThemeContext";
+import { useFetch } from "../../../hooks/UseFetch";
 
 const unfoldAnimation = keyframes`
     0% {
@@ -70,32 +71,20 @@ export type GifGridProps = {
 
 export const GifGrid: React.FC<GifGridProps> = (args) => {
     const { theme } = useContext(ThemeContext);
-    const [gifs, setGifs] = useState<string[]>([]);
 
-    useEffect(() => {
-        try {
-            fetch("/api/v1/joke/" + args.jokeId + "/gif", {
-                method: "GET"
-            }).then(x => x.json()).then(x => {
-                try {
-                    const gifs = x.data.map((data: {keyword: string, gif: string}) => data.gif);
-                    setGifs(gifs);
-                } catch (e) {
-                    console.error("Error processing response from api: " + e);
-                }
-            });
-        } catch (e) {
-            console.error(e);
-        }
-    }, [args.jokeId]);
-    
+    const { data } = useFetch("/api/v1/joke/" + args.jokeId + "/gif");
+
+    if(data === null){
+        return <div style={{padding: "2rem"}}>Gifs api got to many requests, trink tea and refresh...</div>
+    }
+
     return (
         <GifExpand theme={theme}>
             <summary>Related Gifs</summary>
             <GifWrapper>{
-            gifs.map(gif => {
-                return <Gif src={gif} />
-            })
+                data.map((gif: {keyword: string, gif: string}) => {
+                    return <Gif src={gif.gif} />
+                })
             }</GifWrapper>
         </GifExpand>
     );

@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Button } from "../../../components/Button";
+import { Button } from "../../../components/FormItems";
 import { ThemeContext } from "../../../contexts/ThemeContext";
 import styled from "styled-components";
 import { Joke } from "../../../types/Joke";
@@ -18,6 +18,7 @@ export type PatchDeleteProps = {
 
 export const PatchDelete: React.FC<PatchDeleteProps> = (args) => {
     const { theme } = useContext(ThemeContext);
+    
     const [toDashboard, setToDashboard] = useState<boolean>(false);
     const [toPatchJoke, setToPatchJoke] = useState<boolean>(false);
 

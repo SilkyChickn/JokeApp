@@ -24,5 +24,11 @@ export const Dark: Theme = {
     dislike: "#a77",
     dislikeHover: "#c55",
     dislikeClicked: "#f55",
-    funninessFont: "#aaa"
+    funninessFont: "#aaa",
+
+    errorBackground: "rgb(256, 90, 90)",
+    errorFont: "rgb(256, 200, 200)",
+    errorCloseButtonBackground: "rgb(256, 128, 128)",
+    errorCloseButtonFont: "rgb(256, 50, 50)",
+    errorCloseButtonBackgroundHover: "rgb(256, 100, 100)"
 }

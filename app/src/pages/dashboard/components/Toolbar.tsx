@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import styled from "styled-components";
-import { Button } from "../../../components/Button";
+import { Button } from "../../../components/FormItems";
 import { ThemeContext } from "../../../contexts/ThemeContext";
 import { Redirect } from "react-router";
 import { ErrorContext } from "../../../contexts/ErrorContext";
@@ -45,6 +45,7 @@ export const Toolbar: React.FC<ToolbarProps> = (args) => {
     
     const [toPostPage, setToPostPage] = useState<boolean>(false);
 
+    //Download jokes csv via blobs
     const downloadJokes = () => {
         fetch("/api/v1/joke/jokes.csv", {
             method: "GET"

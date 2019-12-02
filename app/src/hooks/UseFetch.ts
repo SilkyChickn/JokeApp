@@ -29,6 +29,6 @@ export function useFetch<T>(url : string){
             setError(null);
         });
     }, [url]);
-
+    
     return {data, loading, error};
 }

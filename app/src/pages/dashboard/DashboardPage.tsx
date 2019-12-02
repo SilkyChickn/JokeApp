@@ -6,7 +6,6 @@ import { ErrorContainer } from "../../components/ErrorContainer";
 import { LoadingContainer } from "../../components/LoadingContainer";
 import { ThemeContext } from "../../contexts/ThemeContext";
 import styled from "styled-components";
-import { Background } from "../../components/Background";
 import { Toolbar } from "./components/Toolbar";
 
 export const DashboardWrapper = styled.div`
@@ -32,12 +31,12 @@ export const DashboardPage: React.FC = () => {
     const {data, error, loading} = useFetch<Joke[]>
         ("/api/v1/joke/?minFunniness=" + minFunniness + "&sortBy=" + sortBy);
 
+    //Show error or loading page when fetch error occurs or is loading
     if(error) return <ErrorContainer error={error} />
     if(data === null || loading) return <LoadingContainer />
     
     return (
         <>
-            <Background />
             <DashboardWrapper theme={theme}>
                 <Toolbar 
                     sortBy={sortBy} 

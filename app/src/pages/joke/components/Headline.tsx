@@ -49,6 +49,7 @@ export type HeadlineProps = {
 
 export const Headline: React.FC<HeadlineProps> = (args) => {
     const { theme } = useContext(ThemeContext);
+    
     const [toDashboard, setToDashboard] = useState<boolean>(false);
 
     return (
