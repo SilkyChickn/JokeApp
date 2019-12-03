@@ -35,7 +35,7 @@ services:
     ports:
       - '3306:3306'
 
-fwe-h2-app:
+  fwe-h2-app:
     image: node:12
     container_name: fwe-h2-app
     volumes:
