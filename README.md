@@ -6,6 +6,7 @@ A react frontend for the Joke Api.
 [![docker][docker-img]][docker-url]
 [![react][react-img]][react-url]
 [![typescript][typescript-img]][typescript-url]
+[![jokeapi][jokeapi-img]][jokeapi-url]
 [![license][license-img]](LICENSE)
 
 ## Setup Project
@@ -28,6 +29,10 @@ Here is little overwiev of some features and *good to know* facts.
 #### Themes
 
 The app comes with two themes, a light and a dark one. At every page there is an Theme switch with the header *Darkmode*. Here you can switch between the two themes.
+
+#### Responsive Design
+
+The pages are responsive and automatically adjusting to your browser size.
 
 #### Loading/Error Container
 
@@ -81,9 +86,11 @@ All rights reserved.
 [typescript-img]: https://img.shields.io/badge/typescript-3.6.4-green.svg?style=flat-square
 [docker-img]: https://img.shields.io/badge/docker--compose-3.0-green.svg?style=flat-square
 [react-img]: https://img.shields.io/badge/react-16.12-green.svg?style=flat-square
+[jokeapi-img]: https://img.shields.io/badge/JokeApi-1.0.0-orange.svg?style=flat-square
 [license-img]: https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square
 
 <!-- Links -->
 [typescript-url]: https://www.typescriptlang.org/
 [docker-url]: https://docs.docker.com/compose/
+[jokeapi-url]: https://code.fbi.h-da.de/istdading/fwe-ws19-20-756891-ha1
 [react-url]: https://reactjs.org/

@@ -48,24 +48,28 @@ const ListItem = styled.li`
 `;
 
 const Header = styled.p`
-    font-size: 1.5rem;
+    font-size: 1.25rem;
 
     margin: 0;
     margin-top: 1.5rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
 
     @media all and (min-width: 800px) {
-        font-size: 2.5rem;
+        font-size: 2rem;
     }
 `;
 
 const Text = styled.p`
-    font-size: 1rem;
+    font-size: .75rem;
     white-space: pre-wrap;
 
     margin: 1.5rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
 
     @media all and (min-width: 800px) {
-        font-size: 1.5rem;
+        font-size: 1.25rem;
     }
 `;
 

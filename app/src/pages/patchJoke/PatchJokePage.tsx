@@ -46,7 +46,9 @@ export const PatchJokePage: React.FC<PatchJokePageProps> = (args) => {
         throw Promise.reject(code + ": " + message);
     }
 
-    const addCategories = async (jokeId: string) => {
+    const addRemoveCategories = async (jokeId: string) => {
+
+        //Add categories
         categories.forEach(async (cat: Category) => {
             const res: Response = await fetch(
                 "/api/v1/joke/" + jokeId + "/category/" + cat.id, {
@@ -59,6 +61,32 @@ export const PatchJokePage: React.FC<PatchJokePageProps> = (args) => {
                 const data = await res.json();
                 if (data.error !== undefined) throwError(res.status, data.error);
                 else throwError(res.status, data.status);
+            }
+        });
+
+        //Remove categories
+        data.categories.forEach(async (cat: Category) => {
+            let keep: boolean = false;
+            categories.forEach((cat2: Category) => {
+                if(cat.id === cat2.id){
+                    keep = true;
+                    return;
+                }
+            });
+
+            if(!keep){
+                const res: Response = await fetch(
+                    "/api/v1/joke/" + jokeId + "/category/" + cat.id, {
+                    method: "DELETE"
+                });
+                
+                if (res.status === 500) {
+                    throwError(res.status, res.statusText);
+                } else if (!res.ok) {
+                    const data = await res.json();
+                    if (data.error !== undefined) throwError(res.status, data.error);
+                    else throwError(res.status, data.status);
+                }
             }
         });
     }
@@ -88,7 +116,7 @@ export const PatchJokePage: React.FC<PatchJokePageProps> = (args) => {
             }
             return res.json();
         }).then((data: any) => {
-            addCategories(data.data.id);
+            addRemoveCategories(data.data.id);
         }).then(() => {
             closeError();
             cancel();
