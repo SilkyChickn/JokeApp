@@ -84,7 +84,7 @@ export const Toolbar: React.FC<ToolbarProps> = (args) => {
                     width: "2rem", height: "2rem", 
                     color: theme.textFont, 
                     backgroundColor: theme.accent1
-                }}>↓≡</span>
+                }}>&darr;&#8801;</span>
                 <FilterBox value={args.sortBy} onChange={(e) => args.setSortBy(e.target.value)} theme={theme}>
                     <option>Funniness</option>
                     <option>Newest</option>
