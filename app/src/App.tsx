@@ -4,18 +4,18 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { DashboardPage } from './pages/dashboard/DashboardPage';
 import { JokePage } from './pages/joke/JokePage';
 import { PostJokePage } from './pages/createJoke/PostJokePage';
-import { ThemeSwitch } from './components/ThemeSwitch';
 import { PatchJokePage } from './pages/patchJoke/PatchJokePage';
 import { ErrorContextProvider } from './contexts/ErrorContext';
 import { ErrorBanner } from './components/ErrorBanner';
 import { Background } from './components/Background';
+import { TitleBanner } from './components/TitleBanner';
 
 const App: React.FC = () => {
     return (
         <Router>
             <ThemeContextProvider>
                 <ErrorContextProvider>
-                    <ThemeSwitch />
+                    <TitleBanner />
                     <ErrorBanner />
                     <Background />
                     <Switch>

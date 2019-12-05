@@ -34,7 +34,7 @@ const CloseError = styled.a`
 
 /**Showing the errors from the error context
  */
-export const ErrorBanner: React.FC = (args) => {
+export const ErrorBanner: React.FC = () => {
     const { error, closeError } = useContext(ErrorContext);
     const { theme } = useContext(ThemeContext);
 

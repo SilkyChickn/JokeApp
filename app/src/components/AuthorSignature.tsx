@@ -3,7 +3,7 @@ import { Author } from "../types/Author";
 import styled from "styled-components";
 import { ThemeContext } from "../contexts/ThemeContext";
 
-const Signature = styled.p`
+const Signature = styled.div`
     color: ${props => props.theme.signatureFont};
     background-color: ${props => props.theme.accent2};
 
@@ -11,10 +11,10 @@ const Signature = styled.p`
 
     margin: 0;
     padding: 1.5rem;
-    border-top: 1px solid #000;
+    //border-top: 1px solid #000;
 `;
 
-const AuthorName = styled.p`
+const AuthorName = styled.div`
     font-style: normal;
     font-size: 1.25rem;
     

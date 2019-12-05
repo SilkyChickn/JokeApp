@@ -20,15 +20,17 @@ The app and api is fully dockerized and can be started with a predefined docker 
 
 After the console outputs "You can now view fwe-h2-joke-app in the browser." the APP is successfully running and listening on port *:3000
 
----
-
 ## Good to know
 
-Here is little overwiev of some features and *good to know* facts.
+Here is little overview of some features and *good to know* facts.
+
+#### Back to dashboard
+
+To go back to the dashboard you can click onto the logo in the top left corner.
 
 #### Themes
 
-The app comes with two themes, a light and a dark one. At every page there is an Theme switch with the header *Darkmode*. Here you can switch between the two themes.
+The app comes with two themes, a light and a dark one. At every page there is an theme switch in the top right corner, with the label *Darkmode*. Here you can switch between the two themes.
 
 #### Responsive Design
 
@@ -41,6 +43,10 @@ Some pages cant display something without an response of the api. Then they disp
 #### Error Banner
 
 The app contains a error context and a banner that displays all errors in a red banner at the top of the screen. You can close it with the *close button*.
+
+#### No frameworks
+
+I havent used any CSS framework to style this website.
 
 ---
 
@@ -58,21 +64,19 @@ The Dashboard is the main page of the app. It lists all jokes in a list with its
 
 **Accessible over ('/joke/:id')**
 
-The joke page is a detailed view of a single joke. Here you can see next to the title, text, categories, funniness and the author, you can see here the creation and updated timestamps, and edit and delete button to edit or delte the joke and the related gif section. You can unfold this section and ses gifs that are related to this joke. Sometimes there is a text '*Gifs api got to many requests, trink tea and refresh...*' instead of the section. Then just wait a little bit and reload the page, because the external api got too many requests. You can get back to the dashboard over the *<< button* in the top left corner.
+The joke page is a detailed view of a single joke. Here you can see next to the title, text, categories, funniness and the author, you can see here the creation and updated timestamps, and edit and delete button to edit or delete the joke and the related gif section. You can unfold this section and ses gifs that are related to this joke. Sometimes there is a text '*Gifs api got to many requests, trink tea and refresh...*' instead of the section. Then just wait a little bit and reload the page, because the external api got too many requests. You can get back to the dashboard by clicking on the logo in the top left corner.
 
 #### Edit Joke Page
 
 **Accessible over ('/joke/:id/edit')**
 
-If you clicked on the edit button, you cam to a page, where you can edit an existing joke. Here you can change the title and text, add or remove categories and change if the joke should be listed on the dashboard page. To discard your changes just click the *cancel button*, to save click the *save changes button*
+If you clicked on the edit button, you cam to a page, where you can edit an existing joke. Here you can change the title and text, add or remove categories and change if the joke should be listed on the dashboard page. To discard your changes just click the *cancel button*, to save click the *save changes button*. You can get back to the dashboard by clicking on the logo in the top left corner.
 
 #### Create Joke Page
 
 **Accessible over ('/create')**
 
-After clicking on the *+ button* on the dashboard you are on the create joke page, where you can create new jokes. Here you can enter a title and text. The select some categories, or create new categories by type in the name and press enter. Now you can select an existing author from the list or click on *Create new author*, to create a new one. Here you can enter the name and signature of the new author. You still have to choose if the joke should be listed on the dashboard and then you can post the joke with the *Post Joke button*. If you want to cancel and not post the joke, click on the *Cancel button*.
-
----
+After clicking on the *+ button* on the dashboard you are on the create joke page, where you can create new jokes. Here you can enter a title and text. The select some categories, or create new categories by type in the name and press enter. Now you can select an existing author from the list or click on *Create new author*, to create a new one. Here you can enter the name and signature of the new author. You still have to choose if the joke should be listed on the dashboard and then you can post the joke with the *Post Joke button*. If you want to cancel and not post the joke, click on the *Cancel button*. You can get back to the dashboard by clicking on the logo in the top left corner (This cancels the changes, too).
 
 ## License
 

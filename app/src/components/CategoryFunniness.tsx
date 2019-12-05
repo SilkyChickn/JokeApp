@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { CategoryList, CategoryItem } from "./CategoryItem";
 import { FunninessController } from "./FunninessController";
 import { Joke } from "../types/Joke";
+import { Category } from "../types/Category";
 
 const CategoryFunninessWrapper = styled.div`
     display: flex;
@@ -24,8 +25,8 @@ export const CategoryFunniness: React.FC<CategoryFunninessProps> = (args) => {
     return (
         <CategoryFunninessWrapper>
             <CategoryList>{
-                args.joke.categories.map(cat => {
-                    return <CategoryItem category={cat} />
+                args.joke.categories.map((cat: Category) => {
+                    return <CategoryItem key={cat.id} category={cat} />
                 })
             }</CategoryList>
             <FunninessController joke={args.joke} />

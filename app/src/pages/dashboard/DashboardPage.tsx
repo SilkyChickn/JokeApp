@@ -46,7 +46,7 @@ export const DashboardPage: React.FC = () => {
                 />
                 <JokeList>{
                     data.map(joke => {
-                        return <JokeItem joke={joke} />
+                        return <JokeItem key={joke.id} joke={joke} />
                     })
                 }</JokeList>
             </DashboardWrapper>
