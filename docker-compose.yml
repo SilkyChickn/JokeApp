@@ -1,48 +1,50 @@
-version: '3'
+version: "3"
 services:
-  fwe-h2-api:
-    image: node:12
-    container_name: fwe-h2-api
-    volumes:
-      - ./api:/api/
-    working_dir: /api
-    environment:
-    - API_PORT=8080
-    - DBDATABASE=fwe-db
-    - DBHOST=fwe-h2-db
-    - DBPASSWORD=123456789
-    - DBPORT=3306
-    - DBUSER=fwe-user
-    - NODE_ENV=local
-    command: bash ./run.sh
-    ports:
-      - '8080:8080'
-    depends_on:
-      - fwe-h2-db
+    fwe-h2-api:
+        image: node:12
+        container_name: fwe-h2-api
+        volumes:
+            - ./api:/api/
+        working_dir: /api
+        environment:
+            - API_PORT=8080
+            - DBDATABASE=fwe-db
+            - DBHOST=fwe-h2-db
+            - DBPASSWORD=123456789
+            - DBPORT=3306
+            - DBUSER=fwe-user
+            - NODE_ENV=local
+        command: bash ./run.sh
+        ports:
+            - "8080:8080"
+        depends_on:
+            - fwe-h2-db
 
-  fwe-h2-db:
-    image: mysql:5.7
-    container_name: fwe-h2-db
-    command:
-      - --character-set-server=utf8mb4
-      - --collation-server=utf8mb4_unicode_ci
-      - --skip-character-set-client-handshake
-    environment:
-      - MYSQL_ROOT_PASSWORD=123456789
-      - MYSQL_DATABASE=fwe-db
-      - MYSQL_USER=fwe-user
-      - MYSQL_PASSWORD=123456789
-    ports:
-      - '3306:3306'
+    fwe-h2-db:
+        image: mysql:5.7
+        container_name: fwe-h2-db
+        command:
+            - --character-set-server=utf8mb4
+            - --collation-server=utf8mb4_unicode_ci
+            - --skip-character-set-client-handshake
+        environment:
+            - MYSQL_ROOT_PASSWORD=123456789
+            - MYSQL_DATABASE=fwe-db
+            - MYSQL_USER=fwe-user
+            - MYSQL_PASSWORD=123456789
+        ports:
+            - "3306:3306"
 
-  fwe-h2-app:
-    image: node:12
-    container_name: fwe-h2-app
-    volumes:
-      - ./app:/app/
-    working_dir: /app
-    command: bash ./run.sh
-    ports:
-      - '3000:3000'
-    depends_on:
-      - fwe-h2-api
+    fwe-h2-app:
+        image: node:12
+        container_name: fwe-h2-app
+        volumes:
+            - ./app:/app/
+        working_dir: /app
+        command: bash ./run.sh
+        ports:
+            - "3000:3000"
+        depends_on:
+            - fwe-h2-api
+        environment:
+            CI: "true"
