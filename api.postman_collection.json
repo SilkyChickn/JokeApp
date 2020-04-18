@@ -1,0 +1,594 @@
+{
+	"info": {
+		"_postman_id": "b146e541-011b-412a-9d4c-f2ed284b7ca0",
+		"name": "fwe-h1",
+		"description": "Collection for the fwe-h1-api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create Data",
+			"item": [
+				{
+					"name": "Adding author",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Jokie\",\n\t\"signature\": \"I love jokes.\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/author/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"author",
+								""
+							]
+						},
+						"description": "This adding a author."
+					},
+					"response": []
+				},
+				{
+					"name": "Adding category",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"title\": \"Computer Science\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/category/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"category",
+								""
+							]
+						},
+						"description": "Adding a category."
+					},
+					"response": []
+				},
+				{
+					"name": "Adding joke",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"title\": \"The programmer\",\n\t\"text\": \"A programmer's wife tells him as he leaves the house: 'While you're out, buy some milk.' He never returns home and the universe runs out of milk.\",\n\t\"visibility\": \"visible\",\n\t\"authorId\": \"122691d8-3a62-4fda-b1a9-14040b7e3fff\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/joke/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"joke",
+								""
+							]
+						},
+						"description": "Adding a joke. Funniness can only be set with an update. Initial funniness is 0."
+					},
+					"response": []
+				},
+				{
+					"name": "Add category to joke",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/joke/93c12d1b-8587-48fb-9c57-16a26fb08d3b/category/5da2d21d-74af-46d1-84e7-bc6f2b425684",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"joke",
+								"93c12d1b-8587-48fb-9c57-16a26fb08d3b",
+								"category",
+								"5da2d21d-74af-46d1-84e7-bc6f2b425684"
+							]
+						},
+						"description": "Adding a category to a joke."
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Update Data",
+			"item": [
+				{
+					"name": "Update joke",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"title\": \"The programmer\",\n\t\"funniness\": 10,\n\t\"text\": \"A programmer's wife tells him as he leaves the house: 'While you're out, buy some milk.' He never returns home and the universe runs out of milk.\",\n\t\"visibility\": \"visible\",\n\t\"authorId\": \"122691d8-3a62-4fda-b1a9-14040b7e3fff\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/joke/93c12d1b-8587-48fb-9c57-16a26fb08d3b",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"joke",
+								"93c12d1b-8587-48fb-9c57-16a26fb08d3b"
+							]
+						},
+						"description": "Updating joke. Can be used to update jokes funniness."
+					},
+					"response": []
+				},
+				{
+					"name": "Update author",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Jokie\",\n\t\"signature\": \"I love jokes <3.\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/author/122691d8-3a62-4fda-b1a9-14040b7e3fff",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"author",
+								"122691d8-3a62-4fda-b1a9-14040b7e3fff"
+							]
+						},
+						"description": "Updating a author."
+					},
+					"response": []
+				},
+				{
+					"name": "Update category",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"title\": \"Frizchen Jokes\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/v1/category/ab3745e9-6d86-4b01-a69e-d512e1d2c18d",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"category",
+								"ab3745e9-6d86-4b01-a69e-d512e1d2c18d"
+							]
+						},
+						"description": "Updating a category."
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Remove Data",
+			"item": [
+				{
+					"name": "Remove author",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/author/01c02bc2-c4f5-4d00-8e50-7321b09d5c83",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"author",
+								"01c02bc2-c4f5-4d00-8e50-7321b09d5c83"
+							]
+						},
+						"description": "Removing an author."
+					},
+					"response": []
+				},
+				{
+					"name": "Remove category",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/category/bfb31747-4dc5-450b-98de-0dc6e0867a99",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"category",
+								"bfb31747-4dc5-450b-98de-0dc6e0867a99"
+							]
+						},
+						"description": "Removing a category."
+					},
+					"response": []
+				},
+				{
+					"name": "Remove joke",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/joke/574b9424-3db2-4e32-880f-3150d83d155b",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"joke",
+								"574b9424-3db2-4e32-880f-3150d83d155b"
+							]
+						},
+						"description": "Removing a joke."
+					},
+					"response": []
+				},
+				{
+					"name": "Remove category from joke",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/joke/93c12d1b-8587-48fb-9c57-16a26fb08d3b/category/5da2d21d-74af-46d1-84e7-bc6f2b425684",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"joke",
+								"93c12d1b-8587-48fb-9c57-16a26fb08d3b",
+								"category",
+								"5da2d21d-74af-46d1-84e7-bc6f2b425684"
+							]
+						},
+						"description": "Removing a category from a joke."
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Show Data",
+			"item": [
+				{
+					"name": "Getting all jokes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/joke/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"joke",
+								""
+							]
+						},
+						"description": "This lists all jokes."
+					},
+					"response": []
+				},
+				{
+					"name": "Getting single joke",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/joke/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"joke",
+								""
+							]
+						},
+						"description": "This getting a single joke by id."
+					},
+					"response": []
+				},
+				{
+					"name": "Getting min funniness 5 jokes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/joke?minFunniness=5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"joke"
+							],
+							"query": [
+								{
+									"key": "minFunniness",
+									"value": "5"
+								}
+							]
+						},
+						"description": "This gives all jokes that have a funniness of minimum five."
+					},
+					"response": []
+				},
+				{
+					"name": "Getting GIFs for joke",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/joke/93c12d1b-8587-48fb-9c57-16a26fb08d3b/gif",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"joke",
+								"93c12d1b-8587-48fb-9c57-16a26fb08d3b",
+								"gif"
+							]
+						},
+						"description": "This getting matching gifs to a joke."
+					},
+					"response": []
+				},
+				{
+					"name": "Getting all categories",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/category/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"category",
+								""
+							]
+						},
+						"description": "Getting all categories."
+					},
+					"response": []
+				},
+				{
+					"name": "Getting single category",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/category/5da2d21d-74af-46d1-84e7-bc6f2b425684",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"category",
+								"5da2d21d-74af-46d1-84e7-bc6f2b425684"
+							]
+						},
+						"description": "Getting specific category by id."
+					},
+					"response": []
+				},
+				{
+					"name": "Getting all authors",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/author/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"author",
+								""
+							]
+						},
+						"description": "Getting all authors."
+					},
+					"response": []
+				},
+				{
+					"name": "Getting single author",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/author/122691d8-3a62-4fda-b1a9-14040b7e3fff",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"author",
+								"122691d8-3a62-4fda-b1a9-14040b7e3fff"
+							]
+						},
+						"description": "Getting a specific author by id."
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Download Data",
+			"item": [
+				{
+					"name": "Download Jokes CSV",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/v1/joke/jokes.csv",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"v1",
+								"joke",
+								"jokes.csv"
+							]
+						},
+						"description": "Downloading jokes as csv file."
+					},
+					"response": []
+				}
+			],
+			"description": "Download data as file.",
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
